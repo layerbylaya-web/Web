@@ -1,69 +1,101 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Bridal Kerala',
-  description: 'Discover luxury bridal kerala services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/bridal-makeup-kerala',
+export const metadata: Metadata = pageMetadata({
+  title: 'Bridal Makeup Artist in Kerala',
+  description: 'Premium bridal makeup artist Kerala and bridal makeup artist Kottayam services by LayeR by Laya for jasmine, gold, saree, veil, church wedding, and reception styling.',
+  path: '/bridal-makeup-kerala',
+  image: generatedImages.bridalKeralaHero,
+});
+
+const faqs = [
+  {
+    question: 'Do you take bridal makeup bookings in Kottayam and Kochi?',
+    answer: 'Yes. LayeR accepts selected bridal makeup Kerala bookings across Kottayam, Kochi, and destination wedding locations depending on date and travel logistics.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/ai-editorial/bridal-kerala-luxury.jpg' }]
-  }
-};
+  {
+    question: 'Can you work with saree, veil, jasmine, and traditional gold styling?',
+    answer: 'Yes. The look is planned around the saree tone, veil, jasmine, jewelry weight, ceremony lighting, and the bride’s preferred softness or definition.',
+  },
+  {
+    question: 'Is Kerala bridal makeup different from UAE bridal makeup?',
+    answer: 'The finish is adapted to climate, outfit, ceremony format, and cultural styling. Kerala bridal looks often need warmer ivory, jasmine, gold, and saree-aware balance.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function BridalKeralaPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20am%20looking%20for%20bridal%20makeup%20and%20hair%20in%20Kerala.%20Please%20share%20your%20bridal%20packages%20and%20availability.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/bridal-makeup-kerala",
-        "name": "LayeR Service: bridal makeup kerala"
-      }} />
-      <Hero 
-        title="Bridal Makeup Kerala"
-        subtitle="Cultural Radiance"
-        imageSrc="/assets/images/ai-editorial/bridal-kerala-luxury.jpg"
-        imageAlt="Bridal Makeup Kerala"
-        objectPosition="center 25%"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/bridal-makeup-kerala',
+          name: 'Bridal makeup Kerala and Kottayam',
+          description: metadata.description || '',
+          image: generatedImages.bridalKeralaHero,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.bridalKerala.h1}
+        subtitle="Jasmine, gold, and warm ivory"
+        description={siteContent.bridalKerala.intro}
+        imageSrc={generatedImages.bridalKeralaHero}
+        imageAlt="Kerala bridal makeup campaign visual with jasmine and gold styling"
+        objectPosition="center 22%"
         ctaText="Book Kerala Bridal"
-        ctaLink={whatsappBookLink}
+        ctaLink={whatsappLinks.bridalKerala}
+        secondaryCtaText="View Portfolio"
+        secondaryCtaLink="/portfolio"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row-reverse gap-16 items-center">
-          <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-              Honoring Tradition with Modern Elegance
-            </h2>
-            <p className="text-lg opacity-80 leading-relaxed font-light">
-              We bring luxury bridal artistry to Kerala, beautifully balancing cultural heritage with contemporary sophistication. From the intricate adornment of jasmine in your hair to the flawless finish that complements traditional gold jewelry and rich silk sarees, every detail is perfected.
-            </p>
-          </div>
-          <div className="lg:w-1/2 relative aspect-[4/5] w-full">
-            <Image src="/assets/images/ai-editorial/bridal-kerala-luxury.jpg" alt="Kerala Bridal Artistry" fill className="object-cover" />
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+          <EditorialImage
+            src={generatedImages.bridalKeralaSecondary}
+            alt="Secondary Kerala bridal campaign visual with hands and jewelry kept secondary"
+            aspect="aspect-[4/5]"
+            objectPosition="center 18%"
+          />
+          <div className="space-y-10">
+            <SectionIntro
+              align="left"
+              title="Tradition held with a lighter hand"
+              body="The artistry supports the bride rather than overpowering her. Skin stays luminous, eyes are defined, lips are balanced, and hair works with jasmine, veil, and jewelry weight."
+            />
+            <ServiceList
+              items={[
+                { title: 'Ceremony glow', body: 'Warm, polished skin that sits naturally beside saree, veil, and gold.' },
+                { title: 'Hair planning', body: 'Jasmine placement, buns, waves, or veil support shaped around the final silhouette.' },
+                { title: 'Reception reset', body: 'A refined transition into evening photography with stronger structure if needed.' },
+              ]}
+            />
           </div>
         </div>
       </section>
 
-      <section className="py-24 px-6 lg:px-12 bg-deep-espresso text-surface-container">
-        <div className="max-w-7xl mx-auto text-center space-y-8">
-          <h2 className="text-3xl md:text-4xl font-serif text-white">Serving Kochi, Kottayam & Beyond</h2>
-          <p className="max-w-2xl mx-auto text-lg opacity-80 font-light">
-            Available for church weddings, temple ceremonies, and grand receptions across Kerala. We manage the styling timeline seamlessly so you can immerse yourself fully in your special day.
-          </p>
-          <a 
-            href={whatsappBookLink}
-            className="inline-block mt-8 px-10 py-4 bg-metallic-gold text-deep-espresso hover:bg-white transition-all uppercase tracking-widest text-sm"
-          >
-            Inquire Availability
-          </a>
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="Available for Kerala wedding moments"
+            body="Church weddings, temple ceremonies, engagement, reception, and family events can be planned with a calm timeline and clear styling direction."
+          />
+          <ServiceList
+            items={[
+              { title: 'Kottayam brides', body: 'Bridal makeup artist Kottayam inquiries can be started through WhatsApp with date and venue.' },
+              { title: 'Kochi weddings', body: 'Soft luxury styling for hotel suites, receptions, portraits, and destination functions.' },
+              { title: 'Destination Kerala', body: 'Travel can be discussed early for selected wedding dates and multi-event bookings.' },
+            ]}
+          />
         </div>
       </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

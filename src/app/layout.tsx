@@ -3,7 +3,6 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import JsonLd from "@/components/JsonLd";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -22,6 +21,10 @@ export const metadata: Metadata = {
   },
   description: "Luxury bridal makeup, editorial styling, and global online beauty consultations based in Dubai and Kerala.",
   metadataBase: new URL('https://layerbylaya.com'),
+  openGraph: {
+    siteName: 'LayeR by Laya',
+    images: [{ url: '/assets/images/generated/home/home-hero-luxury-01.webp' }],
+  },
 };
 
 export default function RootLayout({

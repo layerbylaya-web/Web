@@ -1,64 +1,83 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Party Glam',
-  description: 'Discover luxury party glam services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/party-makeup-and-hair',
+export const metadata: Metadata = pageMetadata({
+  title: 'Party Makeup & Hair Styling',
+  description: 'Party makeup artist Dubai and makeup and hair Dubai services by LayeR by Laya for soft glam, full glam, polished waves, sleek buns, and event-ready beauty.',
+  path: '/party-makeup-and-hair',
+  image: generatedImages.hairOne,
+});
+
+const faqs = [
+  {
+    question: 'Can I book makeup and hair together for a Dubai event?',
+    answer: 'Yes. Party makeup and hair can be booked together for birthdays, receptions, dinners, engagement events, and photoshoots.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Do you offer both soft glam and full evening glam?',
+    answer: 'Yes. The finish can stay soft and luminous or move into stronger eyes, sculpting, and evening structure depending on the event.',
+  },
+  {
+    question: 'Can hair styling be booked without makeup?',
+    answer: 'Selected hair styling requests can be discussed through WhatsApp depending on date, location, and timing.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function PartyMakeupPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20makeup%20or%20hair%20styling.%20Please%20share%20your%20availability%20and%20packages.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/party-makeup-and-hair",
-        "name": "LayeR Service: party makeup and hair"
-      }} />
-      <Hero 
-        title="Party Makeup & Hair"
-        subtitle="Effortless Glamour"
-        imageSrc="/assets/images/enhanced/party/party-glam-hero.jpg"
-        imageAlt="Party Makeup and Hair Styling"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/party-makeup-and-hair',
+          name: 'Party makeup and hair Dubai',
+          description: metadata.description || '',
+          image: generatedImages.hairOne,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.party.h1}
+        subtitle="Soft glam to evening polish"
+        description={siteContent.party.intro}
+        imageSrc={generatedImages.hairOne}
+        imageAlt="Luxury hair styling campaign visual"
+        objectPosition="center"
         ctaText="Book Event Styling"
-        ctaLink={whatsappBookLink}
+        ctaLink={whatsappLinks.general}
+        supportingImageSrc={generatedImages.hairTwo}
+        supportingImageAlt="Second luxury hair styling campaign visual"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-surface-container">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="relative aspect-[3/4] w-full mt-12">
-              <Image src="/assets/images/enhanced/party/hair-waves-detail.jpg" alt="Hair Texture Detail" fill className="object-cover" />
-            </div>
-            <div className="relative aspect-[3/4] w-full mb-12">
-              <Image src="/assets/images/enhanced/portfolio/portfolio-08.jpg" alt="Evening Glam" fill className="object-cover" />
-            </div>
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <EditorialImage src={generatedImages.hairTwo} alt="Hair accessory and bun styling detail" aspect="aspect-[3/4]" objectPosition="center" />
+            <EditorialImage src={generatedImages.editorialTwo} alt="Evening makeup editorial detail" aspect="aspect-[3/4]" objectPosition="center" className="mt-12" />
           </div>
-          <div className="space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-              Camera-Ready for Every Occasion
-            </h2>
-            <p className="text-lg opacity-80 leading-relaxed font-light">
-              Whether you desire a fresh, luminous soft glam or a structured, sultry Arabic-inspired look, we curate styles that make a statement. Paired with modern hair artistry—from sleek blowouts to textured waves—you'll arrive flawless and stay flawless all night.
-            </p>
-            <ul className="space-y-4 text-sm font-light uppercase tracking-widest opacity-80">
-              <li className="flex items-center gap-4"><span className="w-8 h-[1px] bg-metallic-gold"></span> Soft Glam</li>
-              <li className="flex items-center gap-4"><span className="w-8 h-[1px] bg-metallic-gold"></span> Full Evening Glam</li>
-              <li className="flex items-center gap-4"><span className="w-8 h-[1px] bg-metallic-gold"></span> Textured Waves & Updos</li>
-              <li className="flex items-center gap-4"><span className="w-8 h-[1px] bg-metallic-gold"></span> Photoshoot Prep</li>
-            </ul>
+          <div className="space-y-10">
+            <SectionIntro
+              align="left"
+              title="A full look, not separate services"
+              body="Makeup and hair are shaped together so waves, updos, skin, lashes, lips, and accessories feel intentional from every angle."
+            />
+            <ServiceList
+              items={[
+                { title: 'Soft glam', body: 'Luminous skin, gentle definition, and polished hair for daytime or intimate events.' },
+                { title: 'Evening glam', body: 'More eye structure, sculpting, and long-wear details for celebrations and flash photography.' },
+                { title: 'Hair finish', body: 'Textured waves, sleek styling, low buns, accessory placement, and event-ready hold.' },
+              ]}
+            />
           </div>
         </div>
       </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

@@ -6,7 +6,7 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
       "name": "LayeR by Laya",
       "url": "https://layerbylaya.com",
       "logo": "https://layerbylaya.com/assets/brand/layer-logo.png",
-      "image": "https://layerbylaya.com/assets/images/enhanced/hero/home-hero.jpg",
+      "image": "https://layerbylaya.com/assets/images/generated/home/home-hero-luxury-01.webp",
       "description": "Premium makeup and hair styling services in Dubai and Kerala. Specializing in luxury bridal, editorial shoots, and online beauty consultations.",
       "telephone": "+971547467995",
       "founder": {

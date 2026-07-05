@@ -12,7 +12,7 @@ export default function Footer() {
           <p className="text-sm opacity-80 leading-relaxed max-w-sm">
             Premium makeup and hair styling services in Dubai and Kerala. We specialise in luxury bridal, editorial shoots, and personalised online beauty consultations.
           </p>
-          <a href={whatsappBookLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 border border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso transition-all text-xs tracking-widest uppercase mt-4">
+          <a href={whatsappBookLink} target="_blank" rel="noopener noreferrer" aria-label="Book Laya on WhatsApp" className="px-6 py-3 border border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso transition-all text-xs tracking-widest uppercase mt-4">
             Book on WhatsApp
           </a>
         </div>
@@ -45,6 +45,8 @@ export default function Footer() {
           <Link href="/terms" className="hover:text-white">Terms of Service</Link>
         </div>
       </div>
+      {/* build:mobile-hero-finesse-v2 */}
+      <p className="max-w-7xl mx-auto mt-4 text-center text-[10px] opacity-30 tracking-widest">LayeR build: mobile-hero-finesse-v2</p>
     </footer>
   );
 }

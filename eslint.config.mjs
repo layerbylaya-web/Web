@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "check_deployment.js",
+    "convert_images.js",
+    "fix-meta.js",
+    "inject-meta.js",
+    "screenshot.js",
   ]),
 ]);
 

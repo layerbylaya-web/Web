@@ -1,89 +1,155 @@
 import Hero from '@/components/Hero';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { FAQSection, InternalLinkSection, SectionIntro } from '@/components/PremiumSections';
+import { FadeIn, StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Online Consultation',
-  description: 'Discover luxury online consultation services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/online-makeup-consultation',
+export const metadata: Metadata = pageMetadata({
+  title: 'Online Makeup Consultation',
+  description: 'Online makeup consultation by LayeR by Laya for daily makeup consultation, makeup kit audit online, bridal look planning, and learn makeup online one to one sessions.',
+  path: '/online-makeup-consultation',
+  image: generatedImages.onlineHero,
+});
+
+const faqs = [
+  {
+    question: 'How does an online makeup consultation work?',
+    answer: 'The session happens over video call. Laya reviews your face, routine, products, lighting, and goals, then guides practical steps you can repeat yourself.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/ai-editorial/online-consultation-luxury.jpg' }]
-  }
-};
+  {
+    question: 'Can I use online consultation for bridal look planning?',
+    answer: 'Yes. Bridal look planning can cover references, outfit tone, jewelry, hair direction, skin prep, and what to request from your local artist if Laya is not physically present.',
+  },
+  {
+    question: 'Do I need a professional kit for the session?',
+    answer: 'No. The point is to work with your current products first, then identify what to keep, remove, or replace only when it genuinely improves your routine.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function OnlineConsultationPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20an%20online%20makeup%20consultation.%20Please%20share%20available%20slots%20and%20pricing.";
-
   const onlineServices = [
     {
-      title: 'Daily Makeup Consultation',
-      desc: 'Master a 15-minute routine tailored entirely to your skin type, bone structure, and lifestyle.',
-      image: '/assets/images/enhanced/online/daily-routine.jpg',
-      href: '/daily-makeup-consultation'
+      title: 'Video consultation',
+      desc: 'A focused one-to-one call for face mapping, undertone, feature balance, and technique correction.',
+      image: generatedImages.onlineSecondary,
+      href: '/online-makeup-consultation',
     },
     {
-      title: 'Personal Kit Audit',
-      desc: 'A ruthless, honest review of your current makeup bag. Keep what works, toss what doesn\'t.',
-      image: '/assets/images/enhanced/online/kit-audit.jpg',
-      href: '/personal-makeup-kit-audit'
+      title: 'Daily routine',
+      desc: 'A realistic daily makeup consultation built around your lifestyle, skin, and available time.',
+      image: generatedImages.editorialTwo,
+      href: '/daily-makeup-consultation',
     },
     {
-      title: 'Learn Your Own Makeup',
-      desc: 'A comprehensive step-by-step masterclass on your own face, guided live.',
-      image: '/assets/images/enhanced/online/learn-makeup-clean.jpg',
-      href: '/learn-your-own-makeup-online'
-    }
+      title: 'Kit audit',
+      desc: 'A keep, remove, replace review of products and tools. Uses the approved kit image with crop care.',
+      image: generatedImages.kitAuditApproved,
+      href: '/personal-makeup-kit-audit',
+    },
+    {
+      title: 'Bridal look planning',
+      desc: 'Remote direction for outfit, jewelry, skin prep, hair, and artist communication before the wedding.',
+      image: generatedImages.bridalKeralaSecondary,
+      href: '/bridal-makeup-kerala',
+    },
+    {
+      title: 'Learn your own makeup',
+      desc: 'A live guided lesson where you apply while Laya corrects technique in real time.',
+      image: generatedImages.onlineHero,
+      href: '/learn-your-own-makeup-online',
+    },
   ];
 
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/online-makeup-consultation",
-        "image": "https://layerbylaya.com/assets/images/ai-editorial/online-consultation-luxury.jpg",
-        "name": "LayeR Service: online makeup consultation"
-      }} />
-      <Hero 
-        title="Online Consultations"
-        subtitle="Global Expertise, Delivered Vertically"
-        imageSrc="/assets/images/ai-editorial/online-consultation-luxury.jpg"
-        imageAlt="Online Makeup Consultation"
-        objectPosition="center center"
-        ctaText="Book a Session"
-        ctaLink={whatsappBookLink}
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/online-makeup-consultation',
+          name: 'Online makeup consultation',
+          description: metadata.description || '',
+          image: generatedImages.onlineHero,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.onlineConsultation.h1}
+        subtitle="Global beauty guidance"
+        description={siteContent.onlineConsultation.intro}
+        imageSrc={generatedImages.onlineHero}
+        imageAlt="Online makeup consultation campaign visual with laptop and ring light"
+        objectPosition="center"
+        ctaText="Book Online"
+        ctaLink={whatsappLinks.online}
+        secondaryCtaText="Compare Services"
+        secondaryCtaLink="/services"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-deep-espresso text-blush-paper">
-        <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-serif text-white mb-6">Master Your Canvas</h2>
-          <p className="max-w-2xl mx-auto text-lg opacity-80 font-light">
-            No matter where you are in the world, gain access to professional techniques adapted exclusively for your features. No generic tutorials—just personalized, actionable guidance.
-          </p>
-        </div>
-
-        <div className="max-w-7xl mx-auto space-y-24">
-          {onlineServices.map((svc, i) => (
-            <div key={svc.title} className={`flex flex-col lg:flex-row items-center gap-12 ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-              <div className="relative aspect-[4/5] w-full lg:w-1/2 overflow-hidden group">
-                <Link href={svc.href}>
-                  <Image src={svc.image} alt={svc.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="Practical beauty guidance, designed around your own face"
+            body="Online sessions avoid generic tutorial advice. The goal is a clear personal routine, better buying decisions, and techniques you can repeat confidently."
+          />
+          <StaggerContainer className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+            {onlineServices.map((service) => (
+              <StaggerItem key={service.title}>
+                <Link href={service.href} className="group block">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-warm-ivory">
+                    <Image
+                      src={service.image}
+                      alt={`${service.title} editorial concept`}
+                      fill
+                      sizes="(min-width: 1024px) 20vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                      style={{ objectPosition: service.title === 'Kit audit' ? 'center 34%' : 'center' }}
+                    />
+                    <div className="pointer-events-none absolute inset-0 border border-white/60" />
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl text-deep-espresso">{service.title}</h3>
+                  <p className="mt-3 text-sm font-light leading-6 text-soft-espresso/72">{service.desc}</p>
                 </Link>
-              </div>
-              <div className="w-full lg:w-1/2 lg:px-8 space-y-6 text-center lg:text-left">
-                <h3 className="text-3xl md:text-5xl font-serif text-metallic-gold mb-4">{svc.title}</h3>
-                <p className="text-lg opacity-80 font-light mb-8">{svc.desc}</p>
-                <Link href={svc.href} className="inline-block px-8 py-4 border border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso transition-all uppercase tracking-widest text-xs">
-                  Discover {svc.title}
-                </Link>
-              </div>
-            </div>
-          ))}
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </section>
+
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <FadeIn className="relative aspect-[4/5] overflow-hidden bg-warm-ivory">
+            <Image
+              src={generatedImages.onlineSecondary}
+              alt="Online makeup lesson campaign visual with screen text kept secondary"
+              fill
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: 'center' }}
+            />
+          </FadeIn>
+          <div className="space-y-8">
+            <SectionIntro
+              align="left"
+              title="Designed for real mirrors, not just mood boards"
+              body="You leave with a routine, product notes, correction points, and a realistic plan for your own lighting, skin, schedule, and confidence level."
+            />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {['Daily routine', 'Keep / remove / replace', 'Bridal plan'].map((item) => (
+                <div key={item} className="border-l border-metallic-gold/35 bg-white/35 p-6 text-sm font-semibold uppercase tracking-[0.13em] text-deep-espresso">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

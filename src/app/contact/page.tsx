@@ -1,74 +1,93 @@
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Contact',
-  description: 'Discover luxury contact services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/contact',
+export const metadata: Metadata = pageMetadata({
+  title: 'Contact LayeR by Laya',
+  description: 'Contact LayeR by Laya for makeup and hair Dubai, bridal makeup Kerala, editorial beauty, commercial production, and online makeup consultation bookings.',
+  path: '/contact',
+  image: generatedImages.brandDetailOne,
+});
+
+const faqs = [
+  {
+    question: 'What should I send when I contact Laya?',
+    answer: 'Share your event date, city, venue if known, service type, timing, outfit or reference images, and whether you need makeup, hair, or online consultation.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Can I inquire for both Dubai and Kerala?',
+    answer: 'Yes. Use the specific WhatsApp inquiry route for UAE bridal, Kerala bridal, or general services so Laya can respond with the right availability context.',
+  },
+  ...commonFaqs,
+];
 
 export default function ContactPage() {
-  const whatsappMainLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20makeup%20or%20hair%20styling.%20Please%20share%20your%20availability%20and%20packages.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "ContactPage",
-        "url": "https://layerbylaya.com/contact",
-        "name": "Contact LayeR by Laya"
-      }} />
-<div className="pt-24 min-h-screen bg-blush-paper">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
-          <div className="relative aspect-[4/5] w-full hidden lg:block">
-            <Image src="/assets/images/enhanced/hero/home-hero.jpg" alt="Contact LayeR" fill className="object-cover object-[center_20%]" />
-          </div>
+      <JsonLd pageSchema={[
+        {
+          '@type': 'ContactPage',
+          url: `${siteUrl}/contact`,
+          name: 'Contact LayeR by Laya',
+          description: metadata.description,
+        },
+        faqSchema(faqs),
+      ]} />
+      <div className="luxury-gradient min-h-screen px-5 pb-20 pt-32 lg:px-12 lg:pt-40">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+          <EditorialImage
+            src={generatedImages.brandDetailOne}
+            alt="Editorial brand mood visual for contacting LayeR by Laya"
+            aspect="aspect-[4/5]"
+            objectPosition="center"
+            priority
+          />
 
-          <div className="space-y-12 lg:pl-8">
+          <div className="space-y-10">
             <div>
-              <h1 className="text-5xl lg:text-7xl font-serif text-deep-espresso mb-6">Let's Connect</h1>
-              <p className="text-lg opacity-80 leading-relaxed font-light">
-                Ready to unveil your true layer? Reach out via WhatsApp to discuss availability, rates, and detailed packages for bridal, editorial, or online consultations.
+              <h1 className="text-balance font-serif text-5xl leading-tight text-deep-espresso md:text-7xl">
+                {siteContent.contact.h1}
+              </h1>
+              <p className="mt-7 text-lg font-light leading-8 text-soft-espresso/78">
+                {siteContent.contact.intro}
               </p>
             </div>
 
-            <div className="space-y-6">
-              <a 
-                href={whatsappMainLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="block w-full text-center px-8 py-5 bg-deep-espresso text-blush-paper hover:bg-metallic-gold transition-colors uppercase tracking-widest text-sm"
-              >
-                Book via WhatsApp
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse bg-deep-espresso px-6 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:bg-metallic-gold hover:text-deep-espresso">
+                General WhatsApp
               </a>
-              <div className="grid grid-cols-2 gap-4">
-                 <a href="https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20am%20looking%20for%20bridal%20makeup%20and%20hair%20in%20UAE.%20Please%20share%20your%20bridal%20packages%20and%20availability." className="block text-center px-4 py-4 border border-deep-espresso/20 text-deep-espresso hover:border-metallic-gold hover:text-metallic-gold transition-colors text-xs uppercase tracking-widest">
-                   UAE Bridal Inquiry
-                 </a>
-                 <a href="https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20am%20looking%20for%20bridal%20makeup%20and%20hair%20in%20Kerala.%20Please%20share%20your%20bridal%20packages%20and%20availability." className="block text-center px-4 py-4 border border-deep-espresso/20 text-deep-espresso hover:border-metallic-gold hover:text-metallic-gold transition-colors text-xs uppercase tracking-widest">
-                   Kerala Bridal Inquiry
-                 </a>
-              </div>
+              <a href={whatsappLinks.bridalDubai} target="_blank" rel="noopener noreferrer" className="border border-deep-espresso/25 px-6 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">
+                UAE Bridal
+              </a>
+              <a href={whatsappLinks.bridalKerala} target="_blank" rel="noopener noreferrer" className="border border-deep-espresso/25 px-6 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">
+                Kerala Bridal
+              </a>
+              <a href={whatsappLinks.online} target="_blank" rel="noopener noreferrer" className="border border-deep-espresso/25 px-6 py-5 text-center text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">
+                Online Session
+              </a>
             </div>
 
-            <div className="pt-8 border-t border-deep-espresso/10 space-y-4">
-              <h3 className="text-xs uppercase tracking-widest text-metallic-gold">Direct Contact</h3>
-              <p className="text-sm font-light opacity-80">+971 54 746 7995</p>
-              <p className="text-sm font-light opacity-80">Based in Dubai & Kerala</p>
-              <p className="text-sm font-light opacity-80">Available Worldwide</p>
+            <div className="border-t border-metallic-gold/25 pt-8 text-sm font-light leading-7 text-soft-espresso/76">
+              <p>WhatsApp: +971 54 746 7995</p>
+              <p>Based in Dubai and Kerala</p>
+              <p>Available for selected destination and online bookings</p>
             </div>
           </div>
-
         </div>
       </div>
-    </div>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
+        <SectionIntro
+          title="A few details make the inquiry faster"
+          body="Date, location, event type, service needs, references, and timing help Laya respond with the most useful next step."
+        />
+      </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

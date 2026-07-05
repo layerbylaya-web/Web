@@ -1,80 +1,102 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { SlideUp } from '@/components/AnimationWrappers';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Bridal Dubai',
-  description: 'Discover luxury bridal dubai services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/bridal-makeup-dubai',
+export const metadata: Metadata = pageMetadata({
+  title: 'Bridal Makeup Artist in Dubai',
+  description: 'Premium bridal makeup artist Dubai services by LayeR by Laya for weddings, engagements, receptions, civil ceremonies, South Indian bridal makeup Dubai, and refined makeup and hair Dubai styling.',
+  path: '/bridal-makeup-dubai',
+  image: generatedImages.bridalDubaiHero,
+});
+
+const faqs = [
+  {
+    question: 'Do you provide bridal makeup and hair in Dubai?',
+    answer: 'Yes. LayeR provides bridal makeup and hair Dubai services for civil ceremonies, hotel weddings, South Indian bridal makeup Dubai, receptions, and family events.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/ai-editorial/bridal-dubai-luxury.jpg' }]
-  }
-};
+  {
+    question: 'Can the look stay fresh through a long UAE wedding day?',
+    answer: 'The base, skin prep, and setting approach are planned for UAE weather, photography, hugs, and long timelines while keeping the finish refined.',
+  },
+  {
+    question: 'Is a trial available for Dubai bridal makeup?',
+    answer: 'Trials can be discussed after the date, venue, outfit direction, and desired finish are shared through WhatsApp.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function BridalDubaiPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20am%20looking%20for%20bridal%20makeup%20and%20hair%20in%20UAE.%20Please%20share%20your%20bridal%20packages%20and%20availability.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/bridal-makeup-dubai",
-        "name": "LayeR Service: bridal makeup dubai"
-      }} />
-      <Hero 
-        title="Bridal Makeup UAE"
-        subtitle="Enduring Elegance"
-        imageSrc="/assets/images/ai-editorial/bridal-dubai-luxury.jpg"
-        imageAlt="Bridal Makeup Dubai"
-        objectPosition="center 35%"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/bridal-makeup-dubai',
+          name: 'Bridal makeup artist Dubai',
+          description: metadata.description || '',
+          image: generatedImages.bridalDubaiHero,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.bridalDubai.h1}
+        subtitle="UAE bridal suite artistry"
+        description={siteContent.bridalDubai.intro}
+        imageSrc={generatedImages.bridalDubaiHero}
+        imageAlt="Luxury Dubai bridal makeup campaign visual"
+        objectPosition="center 30%"
         ctaText="Book UAE Bridal"
-        ctaLink={whatsappBookLink}
+        ctaLink={whatsappLinks.bridalDubai}
+        secondaryCtaText="See Real Portfolio"
+        secondaryCtaLink="/portfolio"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-              Your Vision, Flawlessly Executed
-            </h2>
-            <p className="text-lg opacity-80 leading-relaxed font-light">
-              From sophisticated civil ceremonies to grand hotel receptions, our UAE bridal services are designed to withstand the region's climate while maintaining a radiant, weightless finish. We specialize in both soft romantic glam and striking Arabic-inspired bridal artistry.
-            </p>
-          </div>
-          <div className="lg:w-1/2 relative aspect-square w-full">
-            <Image src="/assets/images/enhanced/bridal/bridal-engagement.jpg" alt="Engagement Look" fill className="object-cover" />
-          </div>
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+          <SlideUp className="space-y-8">
+            <SectionIntro
+              align="left"
+              title="Suite-ready makeup for modern UAE brides"
+              body="From soft romantic glam to structured Arabic-inspired definition, every layer is planned around the dress, jewelry, lighting, and wedding-day schedule."
+            />
+            <ServiceList
+              items={[
+                { title: 'Skin longevity', body: 'Hydration, primer, base, and setting are selected for real UAE event hours.' },
+                { title: 'Hair with balance', body: 'Waves, buns, veils, and accessories are shaped around the makeup silhouette.' },
+                { title: 'Photo discipline', body: 'Complexion, lashes, lips, and shine control are tuned for close-up and flash photography.' },
+              ]}
+            />
+          </SlideUp>
+          <EditorialImage
+            src={generatedImages.bridalDubaiSecondary}
+            alt="Secondary Dubai bridal campaign visual with hands kept secondary"
+            aspect="aspect-[4/5]"
+            objectPosition="center 28%"
+          />
         </div>
       </section>
 
-      <section className="py-24 px-6 lg:px-12 bg-surface-container">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-serif text-center mb-16 text-deep-espresso">The Bridal Journey</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="relative aspect-[3/4] w-full group overflow-hidden">
-               <Image src="/assets/images/enhanced/bridal/bridal-reception.jpg" alt="Reception Glam" fill className="object-cover" />
-               <div className="absolute inset-0 bg-deep-espresso/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6 text-center">
-                 <h3 className="text-white font-serif text-2xl">Reception Glam</h3>
-               </div>
-            </div>
-            <div className="relative aspect-[3/4] w-full group overflow-hidden hidden md:block">
-               <Image src="/assets/images/enhanced/party/party-glam-hero.jpg" alt="Engagement & Henna" fill className="object-cover" />
-               <div className="absolute inset-0 bg-deep-espresso/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6 text-center">
-                 <h3 className="text-white font-serif text-2xl">Engagement</h3>
-               </div>
-            </div>
-            <div className="relative aspect-[3/4] w-full group overflow-hidden">
-               <Image src="/assets/images/enhanced/editorial/beauty-closeup.jpg" alt="Bridal Details" fill className="object-cover" />
-               <div className="absolute inset-0 bg-deep-espresso/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6 text-center">
-                 <h3 className="text-white font-serif text-2xl">Civil Ceremony</h3>
-               </div>
-            </div>
-          </div>
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="Built for Dubai wedding timelines"
+            body="Pre-wedding events, ceremony, portraits, reception, and touch-up planning are handled as one beauty system."
+          />
+          <ServiceList
+            items={[
+              { title: 'Civil ceremony', body: 'Fresh, polished, modern bridal makeup with hair that feels effortless and elevated.' },
+              { title: 'South Indian bridal Dubai', body: 'Warm skin, defined eyes, jasmine or veil-aware hair, and jewelry-conscious balance.' },
+              { title: 'Reception glam', body: 'More structure, stronger eyes, and long-wear lips for evening photography and movement.' },
+            ]}
+          />
         </div>
       </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

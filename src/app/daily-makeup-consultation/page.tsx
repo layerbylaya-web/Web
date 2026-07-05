@@ -1,70 +1,101 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Daily Routine',
-  description: 'Discover luxury daily routine services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/daily-makeup-consultation',
+export const metadata: Metadata = pageMetadata({
+  title: 'Daily Makeup Consultation',
+  description: 'Premium daily makeup consultation by LayeR by Laya for a practical 15-minute routine, fresh skin, product guidance, and online one-to-one makeup coaching.',
+  path: '/daily-makeup-consultation',
+  image: generatedImages.editorialTwo,
+});
+
+const faqs = [
+  {
+    question: 'What do I learn in a daily makeup consultation?',
+    answer: 'You learn a realistic routine for skin prep, base, brows, eyes, cheek, lip, and setting, adapted to your own products and lifestyle.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Can the session help if I only have 10 to 15 minutes?',
+    answer: 'Yes. The routine is designed around your real morning timing, so the result feels polished without becoming a complicated artist routine.',
+  },
+  {
+    question: 'Will Laya recommend new products?',
+    answer: 'Only where needed. The session starts with what you own, then identifies practical gaps or better replacements.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function DailyConsultationPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20an%20online%20makeup%20consultation.%20Please%20share%20available%20slots%20and%20pricing.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/daily-makeup-consultation",
-        "name": "LayeR Service: daily makeup consultation"
-      }} />
-      <Hero 
-        title="Daily Makeup Consultation"
-        subtitle="Your Signature Look"
-        description="Master a 15-minute routine tailored entirely to your skin type, bone structure, and lifestyle."
-        imageSrc="/assets/images/ai-editorial/beauty-closeup-luxury.jpg"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/daily-makeup-consultation',
+          name: 'Daily makeup consultation',
+          description: metadata.description || '',
+          image: generatedImages.editorialTwo,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.daily.h1}
+        subtitle="Your 15-minute signature"
+        description={siteContent.daily.intro}
+        imageSrc={generatedImages.editorialTwo}
+        imageAlt="Editorial beauty close-up for daily makeup consultation"
         objectPosition="center 20%"
-        priority={true}
-        imageAlt="Daily Makeup Routine"
-        ctaText="Book Consultation"
-        ctaLink={whatsappBookLink}
+        ctaText="Book Daily Session"
+        ctaLink={whatsappLinks.online}
+        secondaryCtaText="Audit My Kit"
+        secondaryCtaLink="/personal-makeup-kit-audit"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-8 mb-24">
-          <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-            The 15-Minute Mastery
-          </h2>
-          <p className="max-w-2xl text-lg opacity-80 leading-relaxed font-light">
-            Achieve a flawless, effortless look every single morning. We analyze your face virtually and design a realistic, high-impact routine tailored exclusively to your features and lifestyle.
-          </p>
-        </div>
-
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-2xl font-serif text-center mb-12 text-deep-espresso">The Routine Sequence</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {[
-              { step: '01', name: 'Skin Prep', desc: 'Hydration & Priming' },
-              { step: '02', name: 'The Base', desc: 'Conceal & Perfect' },
-              { step: '03', name: 'Structure', desc: 'Subtle Contour & Flush' },
-              { step: '04', name: 'Eyes', desc: 'Definition & Lift' },
-              { step: '05', name: 'Finish', desc: 'Lips & Setting' }
-            ].map((item) => (
-              <div key={item.step} className="bg-surface-container p-8 text-center flex flex-col items-center justify-center border border-deep-espresso/5 hover:border-metallic-gold/30 transition-colors">
-                <span className="text-metallic-gold text-lg font-serif mb-4">{item.step}</span>
-                <h4 className="text-deep-espresso uppercase tracking-widest text-xs mb-2 font-medium">{item.name}</h4>
-                <p className="text-sm opacity-60 font-light">{item.desc}</p>
-              </div>
-            ))}
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+          <div className="space-y-10">
+            <SectionIntro
+              align="left"
+              title="A routine you can actually repeat"
+              body="The goal is not more steps. It is better choices, cleaner technique, and a soft polished finish that feels right for work, school runs, calls, brunch, or travel."
+            />
+            <ServiceList
+              items={[
+                { title: 'Skin prep', body: 'Hydration, primer, and base strategy that fits your skin texture and climate.' },
+                { title: 'Feature balance', body: 'Brows, eyes, cheeks, and lips taught in a sequence you can remember.' },
+                { title: 'Product edit', body: 'Your current products stay central, with replacements suggested only where useful.' },
+              ]}
+            />
           </div>
+          <EditorialImage
+            src={generatedImages.kitAuditApproved}
+            alt="Approved kit audit product image used as secondary daily makeup detail"
+            aspect="aspect-[4/5]"
+            objectPosition="center 32%"
+          />
         </div>
       </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="The routine sequence"
+            body="Each step is simplified, practiced, and documented so you can recreate it without guessing."
+          />
+          <ServiceList
+            items={[
+              { title: '01 Prep', body: 'Clean skin, hydrated base, primer decisions, and complexion placement.' },
+              { title: '02 Define', body: 'Brows, eyes, mascara, and subtle lift based on your face shape.' },
+              { title: '03 Finish', body: 'Cheeks, lips, setting, and the small details that make it look intentional.' },
+            ]}
+          />
+        </div>
+      </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

@@ -1,145 +1,238 @@
-import JsonLd from '@/components/JsonLd';
+import Hero from '@/components/Hero';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import ImageStrip from '@/components/ImageStrip';
+import JsonLd from '@/components/JsonLd';
+import {
+  CampaignImageNote,
+  EditorialImage,
+  FAQSection,
+  InternalLinkSection,
+  SectionIntro,
+  ServiceList,
+} from '@/components/PremiumSections';
+import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Home',
-  description: 'Discover luxury home services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/',
+export const metadata: Metadata = pageMetadata({
+  title: 'Premium Makeup & Hair Styling by Laya',
+  description: 'Premium makeup and hair styling by Laya for bridal, event, editorial, and camera-ready beauty across UAE, Kerala, and online clients worldwide.',
+  path: '/',
+  image: generatedImages.homeHero,
+});
+
+const homeFaqs = [
+  {
+    question: 'Do you provide makeup and hair in Dubai?',
+    answer: 'Yes. LayeR offers premium makeup and hair Dubai services for bridal events, parties, editorial shoots, and commercial bookings across the UAE.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Do you provide bridal makeup in Kerala?',
+    answer: 'Yes. Bridal makeup Kerala bookings can be discussed for Kottayam, Kochi, and selected destination ceremonies with early availability checks.',
+  },
+  {
+    question: 'Can I book an online makeup consultation from another country?',
+    answer: 'Yes. Online makeup consultation, daily makeup consultation, kit audit, and learn makeup online one to one sessions are available globally.',
+  },
+  ...commonFaqs.slice(0, 2),
+];
 
 export default function Home() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20makeup%20or%20hair%20styling.%20Please%20share%20your%20availability%20and%20packages.";
+  const services = [
+    {
+      title: 'Bridal Dubai',
+      body: 'Luxury bridal makeup artist Dubai services for hotel suites, civil ceremonies, South Indian bridal makeup Dubai, and reception glam.',
+      href: '/bridal-makeup-dubai',
+      image: generatedImages.bridalDubaiHero,
+    },
+    {
+      title: 'Bridal Kerala',
+      body: 'Warm ivory, jasmine, saree, and gold-led bridal makeup Kerala styling for Kottayam, Kochi, and destination wedding days.',
+      href: '/bridal-makeup-kerala',
+      image: generatedImages.bridalKeralaHero,
+    },
+    {
+      title: 'Online Beauty',
+      body: 'Daily makeup consultation, makeup kit audit online, and learn makeup online one to one sessions tailored to your own face.',
+      href: '/online-makeup-consultation',
+      image: generatedImages.onlineHero,
+    },
+  ];
 
   return (
     <>
-      <JsonLd />
-      {/* Editorial Hero */}
-      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center lg:items-end justify-start lg:justify-end overflow-hidden bg-deep-espresso">
-        <div className="absolute inset-0 lg:w-[75%] lg:left-0 h-full z-0">
-          <Image
-            src="/assets/images/enhanced/hero/home-hero.jpg"
-            alt="LayeR Editorial Beauty Portrait"
-            fill
-            priority
-            className="object-cover object-center lg:object-[center_20%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-deep-espresso/60 lg:from-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-deep-espresso/20 lg:to-deep-espresso"></div>
-        </div>
-        
-        <div className="relative z-10 w-full lg:w-[35%] px-8 pb-16 lg:pb-32 pt-32 lg:pt-0 lg:pr-16 text-left">
-          <p className="text-xs tracking-[0.3em] uppercase text-metallic-gold mb-6 font-medium">
-            The Sublime of Change
-          </p>
-          <h1 className="text-5xl md:text-7xl font-serif text-white mb-8 leading-[1.1]">
-            Unveil Your<br/><i className="font-light italic text-metallic-gold">True</i> Layer.
-          </h1>
-          <a 
-            href={whatsappBookLink}
-            className="inline-block px-10 py-4 border border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso transition-all duration-300 uppercase tracking-widest text-xs"
-          >
-            Book Consultation
-          </a>
-        </div>
-      </section>
-
-      {/* Secondary Image Strip / Service Intro */}
-      <section className="py-24 px-6 lg:px-12 bg-surface-container">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-              Mastering the Art of Subtle Transformation
-            </h2>
-            <p className="text-lg opacity-80 leading-relaxed font-light">
-              LayeR is a premium makeup and hair styling studio based in Dubai and Kerala. 
-              We specialize in creating flawless, enduring looks that enhance your natural features—whether for your wedding day, a high-fashion editorial, or a daily refinement.
-            </p>
-            <Link href="/about-laya" className="inline-block pb-2 border-b border-deep-espresso text-sm tracking-widest uppercase hover:text-metallic-gold hover:border-metallic-gold transition-all">
-              Discover Our Philosophy
-            </Link>
-          </div>
-          <div className="lg:w-1/2 grid grid-cols-2 gap-4">
-            <div className="relative aspect-[3/4] w-full mt-8">
-              <Image src="/assets/images/ai-editorial/bridal-dubai-luxury.jpg" alt="Bridal Campaign Detail" fill className="object-cover" />
-            </div>
-            <div className="relative aspect-[3/4] w-full mb-8">
-              <Image src="/assets/images/enhanced/editorial/beauty-closeup.jpg" alt="Editorial Texture" fill className="object-cover" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The LayeR Method */}
-      <section className="py-24 px-6 lg:px-12 bg-deep-espresso text-blush-paper relative overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          <div className="lg:col-span-5 relative aspect-[4/5] w-full">
-            <Image src="/assets/images/ai-editorial/beauty-closeup-luxury.jpg" alt="The LayeR Method Macro Detail" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
-            <div className="absolute inset-0 border border-metallic-gold/30 scale-95"></div>
-          </div>
-          <div className="lg:col-span-1 hidden lg:block"></div>
-          <div className="lg:col-span-6 space-y-12">
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase text-metallic-gold mb-4">Our Approach</p>
-              <h2 className="text-4xl md:text-5xl font-serif text-white">The LayeR Method</h2>
-            </div>
-            <div className="space-y-8">
-              <div className="border-l border-metallic-gold/30 pl-6">
-                <h3 className="text-xl font-serif text-metallic-gold mb-2">1. Skin Analysis</h3>
-                <p className="text-sm opacity-70 leading-relaxed font-light">Every masterpiece begins with the canvas. We assess texture, hydration, and undertones to select the perfect preparatory layers.</p>
-              </div>
-              <div className="border-l border-metallic-gold/30 pl-6">
-                <h3 className="text-xl font-serif text-metallic-gold mb-2">2. The Base Architecture</h3>
-                <p className="text-sm opacity-70 leading-relaxed font-light">Building coverage that looks like skin. We use micro-layering techniques to ensure longevity without heaviness.</p>
-              </div>
-              <div className="border-l border-metallic-gold/30 pl-6">
-                <h3 className="text-xl font-serif text-metallic-gold mb-2">3. Sculpt & Sublime</h3>
-                <p className="text-sm opacity-70 leading-relaxed font-light">Enhancing bone structure with light and shadow, finishing with color theory tailored to your specific aesthetic goals.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <ImageStrip images={[
-        { src: '/assets/images/enhanced/portfolio/portfolio-05.jpg', alt: 'Detail crop 1' },
-        { src: '/assets/images/enhanced/portfolio/portfolio-09.jpg', alt: 'Detail crop 2' },
-        { src: '/assets/images/enhanced/portfolio/portfolio-11.jpg', alt: 'Detail crop 3' }
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/',
+          name: 'Premium makeup artist Dubai, Kerala and online consultation',
+          description: metadata.description || '',
+          image: generatedImages.homeHero,
+        }),
+        faqSchema(homeFaqs),
       ]} />
+      <Hero
+        title={siteContent.home.h1}
+        subtitle="LayeR by Laya"
+        description={`${siteContent.home.subheadline} ${siteContent.home.support}`}
+        imageSrc={generatedImages.homeHero}
+        imageAlt="Premium makeup and hair styling by Laya with jasmine bridal beauty detail"
+        ctaText="Book on WhatsApp"
+        ctaLink={whatsappLinks.general}
+        secondaryCtaText="Explore Services"
+        secondaryCtaLink="/services"
+        supportingImageSrc={generatedImages.homeSecondary}
+        supportingImageAlt="Secondary luxury beauty campaign visual"
+        objectPosition="right center"
+      />
 
-      {/* Selected Works - Real Image Tiles */}
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso mb-6">Selected Works</h2>
-          <Link href="/portfolio" className="text-sm tracking-widest uppercase pb-1 border-b border-deep-espresso hover:text-metallic-gold hover:border-metallic-gold transition-all">
-            View Full Portfolio
+      <section className="rose-gold-gradient mesh-accent px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+          <SlideUp className="space-y-8">
+            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
+              A Dubai beauty brand with Kerala warmth and editorial precision.
+            </h2>
+            <p className="text-lg font-light leading-8 text-soft-espresso/78">
+              LayeR by Laya creates makeup and hair that photographs beautifully, survives real event hours, and feels polished in person. Every look is built with skin architecture, balanced sculpting, and delicate hair integration rather than heavy template glam.
+            </p>
+            <Link href="/services" className="inline-flex border-b border-metallic-gold pb-2 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:text-deep-gold">
+              Explore services
+            </Link>
+          </SlideUp>
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <EditorialImage src={generatedImages.homeSecondary} alt="Luxury campaign beauty image" aspect="aspect-[3/4]" objectPosition="center" className="mt-10" />
+            <EditorialImage src={generatedImages.brandDetailTwo} alt="Blush and champagne LayeR brand detail for premium beauty direction" aspect="aspect-[3/4]" objectPosition="center" className="mb-10" />
+          </div>
+        </div>
+      </section>
+
+      <div className="gold-section-divider mb-0" aria-hidden="true" />
+      <section className="blush-mesh px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <EditorialImage src={generatedImages.editorialOne} alt="Close-up editorial beauty detail for the LayeR Method" aspect="aspect-[4/5]" objectPosition="center" />
+          <div className="space-y-12">
+            <SectionIntro
+              align="left"
+              title="The LayeR Method"
+              label="01 / Method"
+              body="A refined sequence for luminous skin, balanced structure, and hair that belongs to the final silhouette."
+            />
+            <ServiceList
+              items={[
+                { title: 'Skin Architecture', body: 'Prep, hydration, base tone, and texture decisions are built around your actual skin.' },
+                { title: 'Soft Sculpting', body: 'Light, shadow, lashes, lip tone, and brows are balanced so the face stays expressive.' },
+                { title: 'Hair Integration', body: 'Waves, buns, jasmine, veils, and accessories are planned with the makeup rather than added later.' },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <div className="gold-section-divider" aria-hidden="true" />
+      <section className="champagne-band px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="UAE, Kerala, and online beauty services"
+            label="02 / Services"
+            body="Choose the lane that matches your moment, then refine the look directly with Laya through WhatsApp."
+          />
+          <StaggerContainer className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <StaggerItem key={service.title}>
+                <Link href={service.href} className="group card-lift block">
+                  <div className="editorial-frame relative aspect-[4/5] overflow-hidden bg-warm-ivory">
+                    <Image src={service.image} alt={`${service.title} campaign visual`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
+                    <div className="pointer-events-none absolute inset-0 border border-white/60" />
+                    <div className="absolute bottom-0 left-0 right-0 bg-blush-paper/76 px-4 py-3 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-deep-espresso backdrop-blur-md">
+                      {String(services.indexOf(service) + 1).padStart(2, '0')} / {service.title}
+                    </div>
+                  </div>
+                  <h3 className="mt-7 font-serif text-3xl text-deep-espresso">{service.title}</h3>
+                  <p className="mt-3 text-sm font-light leading-6 text-soft-espresso/72">{service.body}</p>
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <SlideUp className="space-y-8">
+            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
+              Bridal campaign direction for Dubai and Kerala.
+            </h2>
+            <p className="text-lg font-light leading-8 text-soft-espresso/78">
+              Dubai brides need a polished suite-ready finish. Kerala brides need warmth, jasmine, gold, and saree-aware styling. Both need makeup and hair that holds under emotion, weather, photography, and long timelines.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/bridal-makeup-dubai" className="border border-deep-espresso px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">Dubai bridal</Link>
+              <Link href="/bridal-makeup-kerala" className="border border-deep-espresso/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">Kerala bridal</Link>
+            </div>
+          </SlideUp>
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <EditorialImage src={generatedImages.bridalDubaiSecondary} alt="Dubai bridal editorial campaign visual" aspect="aspect-[3/4]" objectPosition="center 35%" className="mt-12" />
+            <EditorialImage src={generatedImages.bridalKeralaHero} alt="Kerala bridal editorial campaign visual" aspect="aspect-[3/4]" objectPosition="center 25%" className="mb-12" />
+          </div>
+        </div>
+      </section>
+
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <EditorialImage src={generatedImages.hairOne} alt="Luxury hair styling waves and accessory detail" aspect="aspect-[3/4]" objectPosition="center" />
+            <EditorialImage src={generatedImages.onlineHero} alt="Online makeup consultation campaign setup" aspect="aspect-[3/4]" objectPosition="center" className="mt-12" />
+          </div>
+          <SlideUp className="space-y-8">
+            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
+              Hair styling and online consultation, treated with the same luxury eye.
+            </h2>
+            <p className="text-lg font-light leading-8 text-soft-espresso/78">
+              From soft bridal waves to a practical daily makeup consultation, LayeR keeps the finish elegant, teachable, and personal. Online sessions cover routine design, kit audit, bridal look planning, and one-to-one makeup lessons.
+            </p>
+            <Link href="/online-makeup-consultation" className="inline-flex bg-deep-espresso px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:bg-metallic-gold hover:text-deep-espresso">
+              Plan online
+            </Link>
+          </SlideUp>
+        </div>
+      </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionIntro
+            title="Real portfolio, real LayeR work"
+            label="03 / Portfolio"
+            body="The portfolio presents selected real work, while service pages communicate the mood, finish, and level of detail clients can expect."
+          />
+          <CampaignImageNote />
+          <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
+            {['01', '02', '03', '04'].map((id, index) => (
+              <FadeIn key={id} delay={index * 0.08} className={`relative aspect-[3/4] overflow-hidden bg-warm-ivory ${index === 1 || index === 3 ? 'md:mt-10' : ''}`}>
+                <Link href="/portfolio" className="group block h-full w-full">
+                  <Image src={`/assets/images/portfolio/portfolio-${id}.jpg`} alt={`Real LayeR portfolio preview ${id}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+          <Link href="/portfolio" className="mt-12 inline-flex border border-deep-espresso px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">
+            View real portfolio
           </Link>
         </div>
-        
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link href="/portfolio" className="group relative aspect-[3/4] w-full overflow-hidden">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-01.jpg" alt="Portfolio Selection 1" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
-          </Link>
-          <Link href="/portfolio" className="group relative aspect-[3/4] w-full overflow-hidden mt-0 md:mt-8">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-02.jpg" alt="Portfolio Selection 2" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
-          </Link>
-          <Link href="/portfolio" className="group relative aspect-[3/4] w-full overflow-hidden mt-0 lg:-mt-8">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-03.jpg" alt="Portfolio Selection 3" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
-          </Link>
-          <Link href="/portfolio" className="group relative aspect-[3/4] w-full overflow-hidden mt-0 md:mt-8 lg:mt-0">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-04.jpg" alt="Portfolio Selection 4" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
-          </Link>
-        </div>
+      </section>
+
+      <FAQSection faqs={homeFaqs} />
+      <InternalLinkSection />
+
+      <section className="bg-deep-espresso px-5 py-20 text-center text-blush-paper lg:px-12 lg:py-28">
+        <SlideUp className="mx-auto max-w-3xl">
+          <h2 className="font-serif text-4xl leading-tight md:text-5xl">Ready to build your LayeR look?</h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-8 text-blush-paper/78">
+            Send your date, city, event type, and preferred finish. Laya will guide you toward the right bridal, party, hair, editorial, or online consultation option.
+          </p>
+          <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse mt-10 inline-flex bg-metallic-gold px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:bg-blush-paper">
+            Book on WhatsApp
+          </a>
+        </SlideUp>
       </section>
     </>
   );

@@ -1,65 +1,91 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Editorial',
-  description: 'Discover luxury editorial services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/fashion-editorial-makeup',
+export const metadata: Metadata = pageMetadata({
+  title: 'Fashion & Editorial Makeup Artist',
+  description: 'Fashion makeup artist Dubai services by LayeR by Laya for beauty shoots, editorials, campaigns, model tests, creative productions, and camera-ready hair styling.',
+  path: '/fashion-editorial-makeup',
+  image: generatedImages.editorialOne,
+});
+
+const faqs = [
+  {
+    question: 'Do you work on fashion and editorial shoots in Dubai?',
+    answer: 'Yes. LayeR supports beauty campaigns, model portfolios, editorial shoots, content shoots, and creative production days in Dubai.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Can the makeup be minimal or more experimental?',
+    answer: 'Yes. The look can be barely-there luxury skin, graphic eyes, polished commercial beauty, or a more conceptual editorial direction.',
+  },
+  {
+    question: 'Do you coordinate with photographers and stylists?',
+    answer: 'Yes. Hair, skin, makeup, touch-up timing, and continuity can be planned around the shoot brief and production schedule.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function EditorialPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20need%20makeup%20and%20hair%20styling%20for%20a%20shoot.%20Please%20share%20your%20availability%20for%20commercial%20or%20production%20work.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/fashion-editorial-makeup",
-        "name": "LayeR Service: fashion editorial makeup"
-      }} />
-      <Hero 
-        title="Fashion & Editorial"
-        subtitle="Campaign Ready"
-        imageSrc="/assets/images/enhanced/editorial/fashion-editorial-hero.jpg"
-        imageAlt="Fashion and Editorial Makeup Artistry"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/fashion-editorial-makeup',
+          name: 'Fashion and editorial makeup Dubai',
+          description: metadata.description || '',
+          image: generatedImages.editorialOne,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.fashion.h1}
+        subtitle="Campaign-ready beauty"
+        description={siteContent.fashion.intro}
+        imageSrc={generatedImages.editorialOne}
+        imageAlt="Editorial beauty close-up campaign visual"
+        objectPosition="center"
         ctaText="Book Editorial"
-        ctaLink={whatsappBookLink}
+        ctaLink={whatsappLinks.production}
+        supportingImageSrc={generatedImages.editorialTwo}
+        supportingImageAlt="Second editorial beauty campaign visual"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-8 mb-24">
-          <h2 className="text-4xl md:text-6xl font-serif text-deep-espresso max-w-3xl">
-            Artistry Without Boundaries
-          </h2>
-          <p className="text-lg opacity-80 leading-relaxed font-light max-w-2xl">
-            From striking avant-garde concepts to the perfect minimal "no-makeup" makeup for luxury campaigns. We collaborate with photographers, stylists, and creative directors to craft visual narratives that command attention.
-          </p>
-        </div>
-
-        {/* Asymmetric Editorial Gallery */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <div className="md:col-span-5 relative aspect-[3/4] w-full">
-            <Image src="/assets/images/ai-editorial/beauty-closeup-luxury.jpg" alt="Editorial Beauty Concept" fill className="object-cover" />
-          </div>
-          <div className="md:col-span-7 relative aspect-video w-full">
-            <Image src="/assets/images/enhanced/editorial/beauty-closeup.jpg" alt="Macro Texture" fill className="object-cover" />
-          </div>
-          
-          <div className="md:col-span-8 relative aspect-[16/9] w-full mt-12">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-03.jpg" alt="Fashion Story" fill className="object-cover object-top" />
-          </div>
-          <div className="md:col-span-4 relative aspect-[4/5] w-full mt-12">
-            <Image src="/assets/images/enhanced/portfolio/portfolio-12.jpg" alt="Model Portrait" fill className="object-cover" />
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="Beauty direction for the lens"
+            body="Editorial work needs makeup that reads at distance, close-up, in motion, and under changing light. Every choice is made with the frame in mind."
+          />
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-12">
+            <EditorialImage src={generatedImages.editorialTwo} alt="Editorial makeup detail with clean skin and eyes" aspect="aspect-[4/5]" className="md:col-span-5" />
+            <EditorialImage src={generatedImages.hairTwo} alt="Hair styling detail for editorial shoot" aspect="aspect-[16/10]" className="md:col-span-7 md:mt-20" />
+            <EditorialImage src={generatedImages.brandDetailTwo} alt="Blush and champagne brand detail for editorial beauty direction" aspect="aspect-[16/9]" className="md:col-span-7" />
+            <EditorialImage src={generatedImages.editorialOne} alt="Macro beauty close-up campaign visual" aspect="aspect-[4/5]" className="md:col-span-5 md:-mt-16" />
           </div>
         </div>
       </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            title="Creative production support"
+            body="From clean luxury skin to stronger campaign statements, LayeR keeps continuity, touch-ups, and final frame quality in view."
+          />
+          <ServiceList
+            items={[
+              { title: 'Beauty campaign', body: 'Skin, eyes, lips, and hair polished for close-up campaign work.' },
+              { title: 'Model portfolio', body: 'Versatile looks that show structure, freshness, and professional restraint.' },
+              { title: 'Editorial concept', body: 'Creative detail with enough discipline to photograph cleanly.' },
+            ]}
+          />
+        </div>
+      </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

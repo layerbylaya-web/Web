@@ -1,66 +1,80 @@
 import Hero from '@/components/Hero';
-import Image from 'next/image';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
+import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { siteContent } from '@/data/siteContent';
 
-export const metadata: Metadata = {
-  title: 'LayeR by Laya | Premium Learn Makeup',
-  description: 'Discover luxury learn makeup services by Laya. Specializing in high-end beauty, editorial looks, and virtual consultations.',
-  alternates: {
-    canonical: 'https://layerbylaya.com/learn-your-own-makeup-online',
+export const metadata: Metadata = pageMetadata({
+  title: 'Learn Makeup Online One to One',
+  description: 'Learn makeup online one to one with LayeR by Laya through a guided live makeup session for technique correction, product use, and personal routine building.',
+  path: '/learn-your-own-makeup-online',
+  image: generatedImages.onlineSecondary,
+});
+
+const faqs = [
+  {
+    question: 'How is learn makeup online one to one different from a tutorial?',
+    answer: 'Laya watches your actual application over video call and corrects hand placement, product amount, blending, color, and sequence in real time.',
   },
-  openGraph: {
-    images: [{ url: '/assets/images/enhanced/hero/home-hero.jpg' }]
-  }
-};
+  {
+    question: 'Do I apply the makeup myself during the session?',
+    answer: 'Yes. You hold the brush and apply while Laya guides, pauses, corrects, and explains the why behind each step.',
+  },
+  {
+    question: 'Can I focus on one specific look?',
+    answer: 'Yes. The lesson can focus on daily makeup, event glam, skin prep, eyes, base, or a full routine depending on your goals.',
+  },
+  ...commonFaqs.slice(0, 1),
+];
 
 export default function LearnMakeupPage() {
-  const whatsappBookLink = "https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20an%20online%20makeup%20consultation.%20Please%20share%20available%20slots%20and%20pricing.";
-
   return (
     <>
-      <JsonLd pageSchema={{
-        "@type": "Service",
-        "url": "https://layerbylaya.com/learn-your-own-makeup-online",
-        "name": "LayeR Service: learn your own makeup online"
-      }} />
-      <Hero 
-        title="Learn Your Own Makeup"
-        subtitle="Empowered Artistry"
-        imageSrc="/assets/images/ai-editorial/online-consultation-luxury.jpg"
-        imageAlt="Masterclass Setup"
+      <JsonLd pageSchema={[
+        serviceSchema({
+          path: '/learn-your-own-makeup-online',
+          name: 'Learn makeup online one to one',
+          description: metadata.description || '',
+          image: generatedImages.onlineSecondary,
+        }),
+        faqSchema(faqs),
+      ]} />
+      <Hero
+        title={siteContent.learnMakeup.h1}
+        subtitle="Guided by Laya, applied by you"
+        description={siteContent.learnMakeup.intro}
+        imageSrc={generatedImages.onlineSecondary}
+        imageAlt="Online makeup lesson campaign visual"
+        objectPosition="center"
         ctaText="Book Masterclass"
-        ctaLink={whatsappBookLink}
+        ctaLink={whatsappLinks.online}
+        secondaryCtaText="Kit Audit"
+        secondaryCtaLink="/personal-makeup-kit-audit"
       />
 
-      <section className="py-24 px-6 lg:px-12 bg-blush-paper">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-8 mb-24">
-          <h2 className="text-4xl md:text-5xl font-serif text-deep-espresso">
-            Master Your Own Canvas
-          </h2>
-          <p className="max-w-2xl text-lg opacity-80 leading-relaxed font-light">
-            A live, interactive 1-on-1 virtual masterclass where you hold the brush. We guide you step-by-step through a full face application, correcting techniques and explaining the 'why' behind every movement.
-          </p>
-        </div>
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="border-l border-metallic-gold/30 pl-8 pb-8">
-            <span className="text-4xl font-serif text-metallic-gold/20 block mb-4">01</span>
-            <h3 className="text-xl font-serif text-deep-espresso mb-4">Preparation</h3>
-            <p className="text-sm opacity-80 font-light leading-relaxed">Prior to the session, we evaluate your current skill level and identify the specific looks you want to master.</p>
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+          <div className="space-y-10">
+            <SectionIntro
+              align="left"
+              title="Technique that belongs to your own face"
+              body="The session is structured but personal. You learn how much product to use, where to place it, how to blend, and how to avoid the habits that make makeup feel heavy."
+            />
+            <ServiceList
+              items={[
+                { title: 'Prepare', body: 'Share your current products, skill level, references, and exact makeup goal.' },
+                { title: 'Apply live', body: 'Work one step at a time while Laya corrects technique and placement.' },
+                { title: 'Repeat', body: 'Leave with a clear order, product notes, and practice points for your next application.' },
+              ]}
+            />
           </div>
-          <div className="border-l border-metallic-gold/30 pl-8 pb-8">
-            <span className="text-4xl font-serif text-metallic-gold/20 block mb-4">02</span>
-            <h3 className="text-xl font-serif text-deep-espresso mb-4">Live Session</h3>
-            <p className="text-sm opacity-80 font-light leading-relaxed">A 90-minute guided application. You apply makeup to one side of your face while receiving real-time corrections and technique adjustments.</p>
-          </div>
-          <div className="border-l border-metallic-gold/30 pl-8 pb-8">
-            <span className="text-4xl font-serif text-metallic-gold/20 block mb-4">03</span>
-            <h3 className="text-xl font-serif text-deep-espresso mb-4">The Blueprint</h3>
-            <p className="text-sm opacity-80 font-light leading-relaxed">Receive a detailed post-session face chart, product list, and step-by-step guide to ensure you can recreate the look effortlessly.</p>
-          </div>
+          <EditorialImage src={generatedImages.hairTwo} alt="Hair and accessory detail for complete self-styling direction" aspect="aspect-[4/5]" objectPosition="center" />
         </div>
       </section>
+
+      <FAQSection faqs={faqs} />
+      <InternalLinkSection />
     </>
   );
 }

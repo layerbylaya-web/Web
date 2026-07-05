@@ -3,18 +3,18 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 const images = [
-  { src: '/assets/images/enhanced/portfolio/portfolio-01.jpg', alt: 'Portfolio Image 1', category: 'Bridal' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-02.jpg', alt: 'Portfolio Image 2', category: 'Fashion' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-03.jpg', alt: 'Portfolio Image 3', category: 'Fashion' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-04.jpg', alt: 'Portfolio Image 4', category: 'Bridal' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-05.jpg', alt: 'Portfolio Image 5', category: 'Bridal' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-06.jpg', alt: 'Portfolio Image 6', category: 'Party' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-07.jpg', alt: 'Portfolio Image 7', category: 'Commercial' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-08.jpg', alt: 'Portfolio Image 8', category: 'Party' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-09.jpg', alt: 'Portfolio Image 9', category: 'Fashion' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-10.jpg', alt: 'Portfolio Image 10', category: 'Commercial' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-11.jpg', alt: 'Portfolio Image 11', category: 'Fashion' },
-  { src: '/assets/images/enhanced/portfolio/portfolio-12.jpg', alt: 'Portfolio Image 12', category: 'Bridal' },
+  { src: '/assets/images/portfolio/portfolio-01.jpg', alt: 'Real LayeR portfolio image 1', category: 'Bridal' },
+  { src: '/assets/images/portfolio/portfolio-02.jpg', alt: 'Real LayeR portfolio image 2', category: 'Fashion' },
+  { src: '/assets/images/portfolio/portfolio-03.jpg', alt: 'Real LayeR portfolio image 3', category: 'Fashion' },
+  { src: '/assets/images/portfolio/portfolio-04.jpg', alt: 'Real LayeR portfolio image 4', category: 'Bridal' },
+  { src: '/assets/images/portfolio/portfolio-05.jpg', alt: 'Real LayeR portfolio image 5', category: 'Bridal' },
+  { src: '/assets/images/portfolio/portfolio-06.jpg', alt: 'Real LayeR portfolio image 6', category: 'Party' },
+  { src: '/assets/images/portfolio/portfolio-07.jpg', alt: 'Real LayeR portfolio image 7', category: 'Commercial' },
+  { src: '/assets/images/portfolio/portfolio-08.jpg', alt: 'Real LayeR portfolio image 8', category: 'Party' },
+  { src: '/assets/images/portfolio/portfolio-09.jpg', alt: 'Real LayeR portfolio image 9', category: 'Fashion' },
+  { src: '/assets/images/portfolio/portfolio-10.jpg', alt: 'Real LayeR portfolio image 10', category: 'Commercial' },
+  { src: '/assets/images/portfolio/portfolio-11.jpg', alt: 'Real LayeR portfolio image 11', category: 'Fashion' },
+  { src: '/assets/images/portfolio/portfolio-12.jpg', alt: 'Real LayeR portfolio image 12', category: 'Bridal' },
 ];
 
 const categories = ['All', 'Bridal', 'Fashion', 'Party', 'Commercial'];
