@@ -1,0 +1,142 @@
+[
+  {
+    "original": "public/assets/images/editorial/fashion-editorial-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/editorial/fashion-editorial-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/editorial/beauty-closeup.jpg",
+    "enhanced": "public/assets/images/enhanced/editorial/beauty-closeup.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/party/hair-waves-detail.jpg",
+    "enhanced": "public/assets/images/enhanced/party/hair-waves-detail.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/party/party-glam-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/party/party-glam-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/commercial/commercial-shoot-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/commercial/commercial-shoot-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/commercial/on-set-touchup.jpg",
+    "enhanced": "public/assets/images/enhanced/commercial/on-set-touchup.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-09.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-09.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-08.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-08.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-05.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-05.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-11.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-11.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-10.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-10.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-04.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-04.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-12.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-12.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-06.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-06.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-07.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-07.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-03.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-03.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-02.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-02.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/portfolio/portfolio-01.jpg",
+    "enhanced": "public/assets/images/enhanced/portfolio/portfolio-01.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/hero/home-method-detail.jpg",
+    "enhanced": "public/assets/images/enhanced/hero/home-method-detail.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/hero/home-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/hero/home-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/online/kit-audit.jpg",
+    "enhanced": "public/assets/images/enhanced/online/kit-audit.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/online/learn-makeup-clean.jpg",
+    "enhanced": "public/assets/images/enhanced/online/learn-makeup-clean.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/online/daily-routine.jpg",
+    "enhanced": "public/assets/images/enhanced/online/daily-routine.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/online/online-consultation-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/online/online-consultation-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/bridal/bridal-kerala-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/bridal/bridal-kerala-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/bridal/bridal-dubai-hero.jpg",
+    "enhanced": "public/assets/images/enhanced/bridal/bridal-dubai-hero.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/bridal/bridal-reception.jpg",
+    "enhanced": "public/assets/images/enhanced/bridal/bridal-reception.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  },
+  {
+    "original": "public/assets/images/bridal/bridal-engagement.jpg",
+    "enhanced": "public/assets/images/enhanced/bridal/bridal-engagement.jpg",
+    "type": "Mild Contrast + Warm Tone + Soft Sharpening"
+  }
+]

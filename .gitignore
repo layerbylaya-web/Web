@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# QA and reports
+qa-screenshots
+lighthouse-reports
+lighthouse-reports-production
+desktop-contact-sheet.jpg
+mobile-contact-sheet.jpg
+test.html
