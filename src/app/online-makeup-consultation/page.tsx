@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { FAQSection, InternalLinkSection, SectionIntro } from '@/components/PremiumSections';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -68,6 +68,7 @@ export default function OnlineConsultationPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'Online Makeup Consultation', path: '/online-makeup-consultation' }]),
         serviceSchema({
           path: '/online-makeup-consultation',
           name: 'Online makeup consultation',

@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { CampaignImageNote, FAQSection, InternalLinkSection } from '@/components/PremiumSections';
 import { StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -87,6 +87,7 @@ export default function ServicesPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'Services', path: '/services' }]),
         serviceSchema({
           path: '/services',
           name: 'LayeR makeup and hair services',

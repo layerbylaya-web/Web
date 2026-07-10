@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { FAQSection, InternalLinkSection } from '@/components/PremiumSections';
 import { SlideUp } from '@/components/AnimationWrappers';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl } from '@/lib/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Beauty Journal',
@@ -27,6 +27,7 @@ export default function BlogPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'Beauty Journal', path: '/blog' }]),
         {
           '@type': 'Blog',
           url: `${siteUrl}/blog`,

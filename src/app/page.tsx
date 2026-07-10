@@ -12,7 +12,8 @@ import {
   ServiceList,
 } from '@/components/PremiumSections';
 import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import BookingForm from '@/components/BookingForm';
+import { brand, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -85,6 +86,21 @@ export default function Home() {
         supportingImageAlt="Secondary luxury beauty campaign visual"
         objectPosition="right center"
       />
+
+      <section aria-label="Where LayeR works" className="border-y border-metallic-gold/25 bg-warm-ivory/70 px-5 py-6 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center">
+          {[
+            'On-location across Dubai & UAE',
+            'Kerala bridal specialist',
+            'Online consultations worldwide',
+            'Makeup + hair by one artist',
+          ].map((item) => (
+            <span key={item} className="text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-deep-gold">
+              {item}
+            </span>
+          ))}
+        </div>
+      </section>
 
       <section className="rose-gold-gradient mesh-accent px-5 py-20 lg:px-12 lg:py-28">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
@@ -220,6 +236,40 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="gold-section-divider" aria-hidden="true" />
+      <section id="book" className="champagne-mesh scroll-mt-24 px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+          <div className="space-y-10">
+            <SectionIntro
+              align="left"
+              title="Begin your booking"
+              label="04 / Booking"
+              body="Share your date and moment. Laya replies personally with availability, packages, and honest guidance — whether your event is in Dubai, Kerala, or your consultation is online from anywhere in the world."
+            />
+            <ol className="space-y-6">
+              {[
+                { step: 'Enquire', body: 'Send the form or a WhatsApp message with your date, city, and service.' },
+                { step: 'Consult', body: 'Laya reviews your outfit, skin, references, and timeline with you.' },
+                { step: 'Your moment', body: 'A calm, camera-ready finish on the day — or a personal online session.' },
+              ].map((item, i) => (
+                <li key={item.step} className="flex gap-5">
+                  <span className="font-serif text-3xl text-metallic-gold">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="font-serif text-xl text-deep-espresso">{item.step}</h3>
+                    <p className="mt-1 text-sm font-light leading-6 text-soft-espresso/74">{item.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="border-t border-metallic-gold/25 pt-6 text-sm font-light leading-7 text-soft-espresso/76">
+              <p>WhatsApp: {brand.phoneDisplay}</p>
+              <p>Dubai, UAE &middot; Kerala, India &middot; Online worldwide</p>
+            </div>
+          </div>
+          <BookingForm />
+        </div>
+      </section>
+
       <FAQSection faqs={homeFaqs} />
       <InternalLinkSection />
 
@@ -229,9 +279,14 @@ export default function Home() {
           <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-8 text-blush-paper/78">
             Send your date, city, event type, and preferred finish. Laya will guide you toward the right bridal, party, hair, editorial, or online consultation option.
           </p>
-          <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse mt-10 inline-flex bg-metallic-gold px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:bg-blush-paper">
-            Book on WhatsApp
-          </a>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse inline-flex bg-metallic-gold px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:bg-blush-paper">
+              Book on WhatsApp
+            </a>
+            <a href={brand.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex border border-blush-paper/35 px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:border-metallic-gold hover:text-metallic-gold">
+              Follow @layerbylaya
+            </a>
+          </div>
         </SlideUp>
       </section>
     </>

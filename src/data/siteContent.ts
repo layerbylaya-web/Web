@@ -1,7 +1,7 @@
 export const siteContent = {
   home: {
-    h1: 'Premium Makeup & Hair Styling by Laya',
-    subheadline: 'Bridal, event, editorial, and camera-ready beauty for UAE, Kerala, and online clients worldwide.',
+    h1: 'Luxury Makeup & Hair Styling in Dubai and Kerala',
+    subheadline: 'Bridal, party, fashion, and camera-ready beauty by Laya — in person across the UAE and Kerala, and one-to-one online consultations worldwide.',
     support: 'LayeR by Laya is built around polished skin, refined structure, soft colour, intentional hair, and a finish that looks beautiful in person and on camera.',
   },
   services: {

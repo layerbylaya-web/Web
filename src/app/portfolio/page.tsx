@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { CampaignImageNote, FAQSection, InternalLinkSection } from '@/components/PremiumSections';
 import { FadeIn, SlideUp } from '@/components/AnimationWrappers';
-import { commonFaqs, faqSchema, pageMetadata, siteUrl, whatsappLinks } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, pageMetadata, siteUrl, whatsappLinks } from '@/lib/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Real Makeup Portfolio',
@@ -28,6 +28,7 @@ export default function PortfolioPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'Portfolio', path: '/portfolio' }]),
         {
           '@type': 'ImageGallery',
           url: `${siteUrl}/portfolio`,

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { CampaignImageNote, EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -27,6 +27,7 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'About Laya', path: '/about-laya' }]),
         serviceSchema({
           path: '/about-laya',
           name: 'About LayeR by Laya',

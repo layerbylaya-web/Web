@@ -4,7 +4,33 @@ import { assetLibrary, generatedImages, imageSlotGroups, imageSlots, siteImages 
 export { assetLibrary, generatedImages, imageSlotGroups, imageSlots, siteImages };
 export type { SiteImageSlot, SiteImageType } from '@/data/siteImages';
 
-export const siteUrl = 'https://layerbylaya.com';
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://layerbylaya.com';
+
+export const brand = {
+  name: 'LayeR by Laya',
+  instagram: 'https://instagram.com/layerbylaya',
+  email: 'rahultb1996@gmail.com',
+  phone: '+971547467995',
+  phoneDisplay: '+971 54 746 7995',
+  locations: ['Dubai, UAE', 'Kerala, India'],
+  keralaCities: ['Kochi', 'Kottayam', 'Thiruvananthapuram', 'Thrissur', 'Kozhikode', 'Alappuzha'],
+  uaeCities: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'],
+};
+
+export function breadcrumbSchema(items: { name: string; path: string }[]) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      ...items.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 2,
+        name: item.name,
+        item: `${siteUrl}${item.path}`,
+      })),
+    ],
+  };
+}
 
 export const whatsappLinks = {
   general: 'https://wa.me/971547467995?text=Hi%20Laya%2C%20I%20would%20like%20to%20book%20makeup%20or%20hair%20styling.%20Please%20share%20your%20availability%20and%20packages.',

@@ -2,7 +2,7 @@ import Hero from '@/components/Hero';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro, ServiceList } from '@/components/PremiumSections';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -32,6 +32,7 @@ export default function DailyConsultationPage() {
   return (
     <>
       <JsonLd pageSchema={[
+        breadcrumbSchema([{ name: 'Daily Makeup Consultation', path: '/daily-makeup-consultation' }]),
         serviceSchema({
           path: '/daily-makeup-consultation',
           name: 'Daily makeup consultation',

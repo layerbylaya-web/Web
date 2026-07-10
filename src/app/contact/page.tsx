@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import BookingForm from '@/components/BookingForm';
 import { EditorialImage, FAQSection, InternalLinkSection, SectionIntro } from '@/components/PremiumSections';
-import { commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl, whatsappLinks } from '@/lib/site';
+import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl, whatsappLinks } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
 
 export const metadata: Metadata = pageMetadata({
@@ -34,6 +35,7 @@ export default function ContactPage() {
           description: metadata.description,
         },
         faqSchema(faqs),
+        breadcrumbSchema([{ name: 'Contact & Booking', path: '/contact' }]),
       ]} />
       <div className="luxury-gradient min-h-screen px-5 pb-20 pt-32 lg:px-12 lg:pt-40">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
@@ -79,11 +81,17 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-28">
-        <SectionIntro
-          title="A few details make the inquiry faster"
-          body="Date, location, event type, service needs, references, and timing help Laya respond with the most useful next step."
-        />
+      <div className="gold-section-divider" aria-hidden="true" />
+      <section id="book" className="champagne-mesh scroll-mt-24 px-5 py-20 lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-4xl">
+          <SectionIntro
+            title="Send a detailed enquiry"
+            body="Date, location, event type, service needs, references, and timing help Laya respond with the most useful next step. Prefer chat? Every field below can also be sent straight to WhatsApp."
+          />
+          <div className="mt-12">
+            <BookingForm />
+          </div>
+        </div>
       </section>
 
       <FAQSection faqs={faqs} />
