@@ -11,7 +11,7 @@
   --color-muted-taupe: #8B6F65;
   --color-dusty-rose-border: #D8B9A8;
   --color-metallic-gold: #C9902E;
-  --color-deep-gold: #A66A13;
+  --color-deep-gold: #89520D;
   --color-rose-wine: #7b3f45;
   --color-botanical-sage: #5d6f62;
   --shadow-luxury: 0 32px 90px rgba(42, 23, 18, 0.12);
@@ -253,6 +253,57 @@
   .editorial-link:hover::after {
     width: 100%;
   }
+
+  .reveal-soft,
+  .reveal-rise {
+    animation: reveal-soft 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
+  .reveal-rise {
+    animation-name: reveal-rise;
+  }
+
+  .slow-scale-media {
+    animation: slow-scale-media 18s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .gold-line-reveal {
+    animation: gold-line-draw 1.25s ease both;
+  }
+
+  .editorial-kicker {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-deep-gold);
+  }
+
+  .caption-ribbon {
+    background: rgba(255, 249, 246, 0.84);
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(18px);
+  }
+
+  .story-rule {
+    background: linear-gradient(180deg, rgba(201, 144, 46, 0), rgba(201, 144, 46, 0.72) 18%, rgba(201, 144, 46, 0.72) 82%, rgba(201, 144, 46, 0));
+  }
+}
+
+@keyframes reveal-soft {
+  from { opacity: 0.01; }
+  to { opacity: 1; }
+}
+
+@keyframes reveal-rise {
+  from { opacity: 0.01; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slow-scale-media {
+  0%, 100% { transform: scale(1.025); }
+  50% { transform: scale(1.065); }
 }
 
 @keyframes ambient-gradient {
@@ -295,6 +346,11 @@
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid #a66a13;
+  outline-offset: 3px;
 }
 
 @media (max-width: 1023px) {

@@ -1,108 +1,141 @@
 'use client';
-import { useState } from 'react';
+
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { portfolioImages, type PortfolioCategory } from '@/data/portfolio';
 
-const images = [
-  { src: '/assets/images/portfolio/portfolio-01.jpg', alt: 'Real LayeR portfolio image 1', category: 'Bridal' },
-  { src: '/assets/images/portfolio/portfolio-02.jpg', alt: 'Real LayeR portfolio image 2', category: 'Fashion' },
-  { src: '/assets/images/portfolio/portfolio-03.jpg', alt: 'Real LayeR portfolio image 3', category: 'Fashion' },
-  { src: '/assets/images/portfolio/portfolio-04.jpg', alt: 'Real LayeR portfolio image 4', category: 'Bridal' },
-  { src: '/assets/images/portfolio/portfolio-05.jpg', alt: 'Real LayeR portfolio image 5', category: 'Bridal' },
-  { src: '/assets/images/portfolio/portfolio-06.jpg', alt: 'Real LayeR portfolio image 6', category: 'Party' },
-  { src: '/assets/images/portfolio/portfolio-07.jpg', alt: 'Real LayeR portfolio image 7', category: 'Commercial' },
-  { src: '/assets/images/portfolio/portfolio-08.jpg', alt: 'Real LayeR portfolio image 8', category: 'Party' },
-  { src: '/assets/images/portfolio/portfolio-09.jpg', alt: 'Real LayeR portfolio image 9', category: 'Fashion' },
-  { src: '/assets/images/portfolio/portfolio-10.jpg', alt: 'Real LayeR portfolio image 10', category: 'Commercial' },
-  { src: '/assets/images/portfolio/portfolio-11.jpg', alt: 'Real LayeR portfolio image 11', category: 'Fashion' },
-  { src: '/assets/images/portfolio/portfolio-12.jpg', alt: 'Real LayeR portfolio image 12', category: 'Bridal' },
-];
-
-const categories = ['All', 'Bridal', 'Fashion', 'Party', 'Commercial'];
+type Filter = 'All' | PortfolioCategory;
+const filters: Filter[] = ['All', 'Bridal', 'Fashion', 'Party', 'Commercial'];
 
 export default function PortfolioGallery() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [activeFilter, setActiveFilter] = useState<Filter>('All');
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openerRef = useRef<HTMLButtonElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
-  const filteredImages = activeCategory === 'All' 
-    ? images 
-    : images.filter(img => img.category === activeCategory);
+  const visibleImages = activeFilter === 'All'
+    ? portfolioImages
+    : portfolioImages.filter((image) => image.category === activeFilter);
+  const activeImage = activeIndex === null ? null : visibleImages[activeIndex];
+  const isOpen = activeIndex !== null;
 
-  const openLightbox = (index: number) => {
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || !isOpen) return;
+    dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      if (dialog.open) dialog.close();
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  const closeLightbox = () => {
+    dialogRef.current?.close();
+    setActiveIndex(null);
+    openerRef.current?.focus();
+  };
+
+  const move = (direction: -1 | 1) => {
+    setActiveIndex((index) => index === null ? null : (index + direction + visibleImages.length) % visibleImages.length);
+  };
+
+  const handleDialogKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
+    if (event.key !== 'Tab') return;
+    const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not([disabled])'));
+    const first = buttons[0];
+    const last = buttons[buttons.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
   };
 
   return (
     <div className="w-full">
-      {/* Filters */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
-        {categories.map((cat) => (
+      <div role="group" aria-label="Filter portfolio images" className="mb-12 flex flex-wrap justify-center gap-x-6 gap-y-3 md:mb-16 md:gap-x-8">
+        {filters.map((filter) => (
           <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`text-xs uppercase tracking-widest pb-1 transition-all ${activeCategory === cat ? 'border-b border-metallic-gold text-metallic-gold' : 'text-deep-espresso/60 hover:text-deep-espresso hover:border-b hover:border-deep-espresso'}`}
+            key={filter}
+            type="button"
+            aria-pressed={activeFilter === filter}
+            onClick={() => { setActiveFilter(filter); setActiveIndex(null); }}
+            className={`min-h-11 border-b px-1 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors ${activeFilter === filter ? 'border-deep-gold text-deep-gold' : 'border-transparent text-deep-espresso/70 hover:border-deep-espresso hover:text-deep-espresso'}`}
           >
-            {cat}
+            {filter}
           </button>
         ))}
       </div>
 
-      {/* Masonry Grid Simulation */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 lg:gap-8 space-y-4 lg:space-y-8">
-        {filteredImages.map((img, i) => (
-          <div 
-            key={i} 
-            className="relative w-full overflow-hidden group cursor-pointer break-inside-avoid"
-            onClick={() => openLightbox(i)}
-          >
-            <Image 
-              src={img.src} 
-              alt={img.alt} 
-              width={800} 
-              height={1200} 
-              className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" 
-            />
-            <div className="absolute inset-0 bg-deep-espresso/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-               <span className="text-white text-xs tracking-widest uppercase">{img.category}</span>
+      <ul aria-label={`${activeFilter} portfolio images`} className="columns-1 gap-5 md:columns-2 lg:columns-3 lg:gap-8">
+        {visibleImages.map((image, index) => (
+          <li key={image.id} className="mb-8 break-inside-avoid lg:mb-10">
+            <figure>
+              <button
+                type="button"
+                aria-label={`View ${image.title} in gallery`}
+                className="group relative block w-full overflow-hidden bg-warm-ivory text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-deep-gold"
+                onClick={(event) => { openerRef.current = event.currentTarget; setActiveIndex(index); }}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={800}
+                  height={1200}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                />
+                <span className="absolute bottom-0 left-0 bg-blush-paper/90 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.17em] text-deep-espresso">{image.category}</span>
+              </button>
+              <figcaption className="mt-3 border-b border-metallic-gold/25 pb-3 font-serif text-xl text-deep-espresso">{image.title}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <dialog
+        ref={dialogRef}
+        aria-label="Portfolio image viewer"
+        aria-describedby="portfolio-image-caption"
+        onCancel={(event) => { event.preventDefault(); closeLightbox(); }}
+        onKeyDown={handleDialogKeyDown}
+        className="fixed inset-0 m-auto h-[100dvh] max-h-none w-screen max-w-none bg-deep-espresso p-4 text-blush-paper backdrop:bg-deep-espresso/95 sm:p-8"
+      >
+        {activeImage && (
+          <div className="mx-auto flex h-full max-w-6xl flex-col items-center justify-center gap-4">
+            <div className="flex w-full items-center justify-between gap-4">
+              <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-blush-paper/75">{activeIndex! + 1} / {visibleImages.length} · {activeImage.category}</p>
+              <button type="button" onClick={closeLightbox} autoFocus className="min-h-11 min-w-11 px-3 text-xs font-semibold uppercase tracking-widest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Close</button>
+            </div>
+            <div
+              className="relative min-h-0 w-full flex-1 touch-pan-y"
+              onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null; }}
+              onTouchEnd={(event) => {
+                const start = touchStartX.current;
+                if (start !== null) {
+                  const distance = event.changedTouches[0].clientX - start;
+                  if (Math.abs(distance) > 50) move(distance > 0 ? -1 : 1);
+                }
+                touchStartX.current = null;
+              }}
+            >
+              <Image src={activeImage.src} alt={activeImage.alt} fill sizes="100vw" className="object-contain" />
+            </div>
+            <div className="flex w-full items-center justify-between gap-4">
+              <button type="button" onClick={() => move(-1)} aria-label="Previous portfolio image" className="min-h-11 px-3 text-xs font-semibold uppercase tracking-widest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">← Previous</button>
+              <p id="portfolio-image-caption" aria-live="polite" className="text-center font-serif text-lg sm:text-2xl">{activeImage.title}</p>
+              <button type="button" onClick={() => move(1)} aria-label="Next portfolio image" className="min-h-11 px-3 text-xs font-semibold uppercase tracking-widest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Next →</button>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Lightbox */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 z-[100] bg-deep-espresso/95 flex items-center justify-center p-4">
-          <button 
-            className="absolute top-8 right-8 text-white uppercase text-xs tracking-widest hover:text-metallic-gold transition-colors z-50"
-            onClick={() => setLightboxOpen(false)}
-          >
-            Close
-          </button>
-          
-          <div className="relative w-full max-w-5xl h-[80vh]">
-            <Image 
-              src={filteredImages[currentImageIndex].src} 
-              alt={filteredImages[currentImageIndex].alt} 
-              fill 
-              className="object-contain" 
-            />
-          </div>
-
-          <button 
-            className="absolute left-4 lg:left-12 top-1/2 -translate-y-1/2 text-white p-4 hover:text-metallic-gold transition-colors"
-            onClick={() => setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : filteredImages.length - 1))}
-          >
-            Prev
-          </button>
-          <button 
-            className="absolute right-4 lg:right-12 top-1/2 -translate-y-1/2 text-white p-4 hover:text-metallic-gold transition-colors"
-            onClick={() => setCurrentImageIndex((prev) => (prev < filteredImages.length - 1 ? prev + 1 : 0))}
-          >
-            Next
-          </button>
-        </div>
-      )}
+        )}
+      </dialog>
     </div>
   );
 }

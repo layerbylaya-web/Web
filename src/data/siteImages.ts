@@ -8,9 +8,13 @@ export type SiteImageSlot = {
   alt: string;
   type: SiteImageType;
   objectPosition: string;
+  mobileObjectPosition?: string;
   ratio: string;
+  status?: 'active' | 'reserved';
   notes?: string;
 };
+
+export const blockedImageAssets = ['/assets/images/generated/kit-audit/kit-audit-luxury-01.webp'] as const;
 
 export const siteImages = {
   home: {
@@ -22,6 +26,7 @@ export const siteImages = {
       alt: 'Premium bridal makeup and jasmine hair styling by LayeR by Laya',
       type: 'generated-campaign',
       objectPosition: 'right center',
+      mobileObjectPosition: '65% center',
       ratio: '4:5',
     },
     secondary: {
@@ -32,6 +37,7 @@ export const siteImages = {
       alt: 'Soft luxury beauty campaign image for LayeR by Laya',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 25%',
       ratio: '3:4',
     },
   },
@@ -44,6 +50,7 @@ export const siteImages = {
       alt: 'Premium bridal makeup artist Dubai look with refined hair styling',
       type: 'generated-campaign',
       objectPosition: 'center 25%',
+      mobileObjectPosition: '58% 22%',
       ratio: '4:5',
     },
     secondary: {
@@ -54,6 +61,7 @@ export const siteImages = {
       alt: 'Dubai bridal makeup and hair styling mood for a luxury wedding suite',
       type: 'generated-campaign',
       objectPosition: 'center 35%',
+      mobileObjectPosition: 'center 28%',
       ratio: '3:4',
       notes: 'Keep hands secondary in crop.',
     },
@@ -67,6 +75,7 @@ export const siteImages = {
       alt: 'Kerala bridal makeup with jasmine, gold jewellery, and warm ivory styling',
       type: 'generated-campaign',
       objectPosition: 'center 25%',
+      mobileObjectPosition: 'center 18%',
       ratio: '4:5',
     },
     secondary: {
@@ -77,6 +86,7 @@ export const siteImages = {
       alt: 'South Indian bridal makeup Kerala mood with saree and jewellery styling',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 22%',
       ratio: '4:5',
       notes: 'Do not over-crop hands or jewellery.',
     },
@@ -90,6 +100,7 @@ export const siteImages = {
       alt: 'Online makeup consultation setup with refined beauty products and video guidance',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 18%',
       ratio: '4:5',
       notes: 'Keep tiny screen and product text as background detail.',
     },
@@ -101,6 +112,7 @@ export const siteImages = {
       alt: 'Virtual makeup consultation and beauty lesson mood',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 22%',
       ratio: '4:5',
     },
   },
@@ -113,6 +125,7 @@ export const siteImages = {
       alt: 'Polished everyday makeup consultation with luminous skin and soft colour',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 18%',
       ratio: '4:5',
     },
   },
@@ -125,6 +138,7 @@ export const siteImages = {
       alt: 'Premium makeup kit audit with beauty tools and product review setup',
       type: 'generated-campaign',
       objectPosition: 'center 34%',
+      mobileObjectPosition: 'center 26%',
       ratio: '4:5',
       notes: 'Only approved kit audit image. Do not crop tightly on hand, brush, or labels.',
     },
@@ -138,6 +152,7 @@ export const siteImages = {
       alt: 'Fashion makeup artist Dubai beauty close-up with polished skin and refined eyes',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 20%',
       ratio: '4:5',
     },
     closeupTwo: {
@@ -148,6 +163,7 @@ export const siteImages = {
       alt: 'Editorial makeup detail with luminous skin, soft lips, and camera-ready finish',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 18%',
       ratio: '4:5',
     },
   },
@@ -160,6 +176,7 @@ export const siteImages = {
       alt: 'Luxury makeup and hair Dubai styling with polished waves and accessory detail',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 20%',
       ratio: '4:5',
     },
     stylingTwo: {
@@ -170,7 +187,23 @@ export const siteImages = {
       alt: 'Elegant hair styling detail for bridal, party, and editorial beauty',
       type: 'generated-campaign',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 22%',
       ratio: '4:5',
+    },
+  },
+  aboutLaya: {
+    founderPortraitReserved: {
+      id: 'aboutLaya.founderPortraitReserved',
+      page: 'About Laya',
+      slot: 'Founder portrait slot',
+      src: '/assets/images/generated/brand-detail/about-laya-workspace-01.webp',
+      alt: 'LayeR artist workspace with brushes, palette, jasmine, and hair accessories',
+      type: 'brand-detail',
+      objectPosition: 'center',
+      mobileObjectPosition: 'center 18%',
+      ratio: '4:5',
+      status: 'reserved',
+      notes: 'Awaiting verified real founder portrait. Keep this slot internal until a real portrait is approved.',
     },
   },
   brandDetail: {
@@ -182,6 +215,7 @@ export const siteImages = {
       alt: 'LayeR by Laya brand detail with soft champagne beauty styling',
       type: 'brand-detail',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 18%',
       ratio: '4:5',
     },
     detailTwo: {
@@ -192,6 +226,7 @@ export const siteImages = {
       alt: 'Blush and champagne LayeR brand mood for premium makeup and hair styling',
       type: 'brand-detail',
       objectPosition: 'center',
+      mobileObjectPosition: 'center 22%',
       ratio: '4:5',
       notes: 'Use as brand mood only.',
     },
@@ -209,6 +244,7 @@ export const siteImages = {
           alt: `Real LayeR portfolio makeup and hair image ${number}`,
           type: 'real-portfolio',
           objectPosition: 'center',
+          mobileObjectPosition: 'center 20%',
           ratio: '3:4',
         },
       ];
@@ -232,6 +268,7 @@ export const generatedImages = {
   kitAuditApproved: siteImages.kitAudit.approved.src,
   brandDetailOne: siteImages.brandDetail.detailOne.src,
   brandDetailTwo: siteImages.brandDetail.detailTwo.src,
+  aboutWorkspace: siteImages.aboutLaya.founderPortraitReserved.src,
 };
 
 export const imageSlotGroups = Object.entries(siteImages).map(([group, slots]) => ({
@@ -241,4 +278,6 @@ export const imageSlotGroups = Object.entries(siteImages).map(([group, slots]) =
 
 export const imageSlots = imageSlotGroups.flatMap((group) => group.slots);
 
-export const assetLibrary = imageSlots.map((slot) => slot.src);
+export const assetLibrary = Array.from(
+  new Set(imageSlots.map((slot) => slot.src).filter((src) => !blockedImageAssets.includes(src as (typeof blockedImageAssets)[number]))),
+);

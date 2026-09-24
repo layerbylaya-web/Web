@@ -1,20 +1,14 @@
-import Hero from '@/components/Hero';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Metadata } from 'next';
+import Hero from '@/components/Hero';
 import JsonLd from '@/components/JsonLd';
-import {
-  CampaignImageNote,
-  EditorialImage,
-  FAQSection,
-  InternalLinkSection,
-  SectionIntro,
-  ServiceList,
-} from '@/components/PremiumSections';
-import { FadeIn, SlideUp, StaggerContainer, StaggerItem } from '@/components/AnimationWrappers';
 import BookingForm from '@/components/BookingForm';
+import { EditorialImage, FAQSection, SectionIntro } from '@/components/PremiumSections';
+import { SlideUp } from '@/components/AnimationWrappers';
 import { brand, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSchema, whatsappLinks } from '@/lib/site';
 import { siteContent } from '@/data/siteContent';
+import { portfolioImages } from '@/data/portfolio';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Premium Makeup & Hair Styling by Laya',
@@ -26,7 +20,7 @@ export const metadata: Metadata = pageMetadata({
 const homeFaqs = [
   {
     question: 'Do you provide makeup and hair in Dubai?',
-    answer: 'Yes. LayeR offers premium makeup and hair Dubai services for bridal events, parties, editorial shoots, and commercial bookings across the UAE.',
+    answer: 'Yes. LayeR offers premium makeup and hair in Dubai for bridal events, parties, editorial shoots, and commercial bookings across the UAE.',
   },
   {
     question: 'Do you provide bridal makeup in Kerala?',
@@ -34,44 +28,42 @@ const homeFaqs = [
   },
   {
     question: 'Can I book an online makeup consultation from another country?',
-    answer: 'Yes. Online makeup consultation, daily makeup consultation, kit audit, and learn makeup online one to one sessions are available globally.',
+    answer: 'Yes. Online makeup consultation, daily makeup consultation, kit audit, and one-to-one makeup sessions are available globally.',
   },
   ...commonFaqs.slice(0, 2),
 ];
 
-export default function Home() {
-  const services = [
-    {
-      title: 'Bridal Dubai',
-      body: 'Luxury bridal makeup artist Dubai services for hotel suites, civil ceremonies, South Indian bridal makeup Dubai, and reception glam.',
-      href: '/bridal-makeup-dubai',
-      image: generatedImages.bridalDubaiHero,
-    },
-    {
-      title: 'Bridal Kerala',
-      body: 'Warm ivory, jasmine, saree, and gold-led bridal makeup Kerala styling for Kottayam, Kochi, and destination wedding days.',
-      href: '/bridal-makeup-kerala',
-      image: generatedImages.bridalKeralaHero,
-    },
-    {
-      title: 'Online Beauty',
-      body: 'Daily makeup consultation, makeup kit audit online, and learn makeup online one to one sessions tailored to your own face.',
-      href: '/online-makeup-consultation',
-      image: generatedImages.onlineHero,
-    },
-  ];
+const method = [
+  ['Skin', 'Prep, hydration, tone, and texture are considered before coverage begins.'],
+  ['Structure', 'Brows, eyes, sculpting, and light are balanced around your individual features.'],
+  ['Colour', 'Lip, cheek, eye, outfit, jewellery, and lighting are edited as one palette.'],
+  ['Hair', 'Waves, buns, jasmine, veils, and accessories are planned with the makeup.'],
+  ['Finish', 'Every detail is checked in person, in movement, and through the camera.'],
+];
 
+const proofPoints = [
+  'On-location across Dubai and the UAE',
+  'Kerala bridal styling',
+  'One-to-one online consultation',
+  'Makeup and hair by one artist',
+  'Personalised skin, outfit, and camera planning',
+];
+
+export default function Home() {
   return (
     <>
-      <JsonLd pageSchema={[
-        serviceSchema({
-          path: '/',
-          name: 'Premium makeup artist Dubai, Kerala and online consultation',
-          description: metadata.description || '',
-          image: generatedImages.homeHero,
-        }),
-        faqSchema(homeFaqs),
-      ]} />
+      <JsonLd
+        pageSchema={[
+          serviceSchema({
+            path: '/',
+            name: 'Premium makeup artist Dubai, Kerala and online consultation',
+            description: metadata.description || '',
+            image: generatedImages.homeHero,
+          }),
+          faqSchema(homeFaqs),
+        ]}
+      />
+
       <Hero
         title={siteContent.home.h1}
         subtitle="LayeR by Laya"
@@ -83,187 +75,184 @@ export default function Home() {
         secondaryCtaText="Explore Services"
         secondaryCtaLink="/services"
         supportingImageSrc={generatedImages.homeSecondary}
-        supportingImageAlt="Secondary luxury beauty campaign visual"
+        supportingImageAlt="Secondary LayeR beauty campaign detail"
         objectPosition="right center"
       />
 
-      <section aria-label="Where LayeR works" className="border-y border-metallic-gold/25 bg-warm-ivory/70 px-5 py-6 lg:px-12">
+      <section aria-label="Where LayeR works" className="border-y border-metallic-gold/25 bg-warm-ivory/78 px-5 py-6 lg:px-12">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center">
-          {[
-            'On-location across Dubai & UAE',
-            'Kerala bridal specialist',
-            'Online consultations worldwide',
-            'Makeup + hair by one artist',
-          ].map((item) => (
-            <span key={item} className="text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-deep-gold">
+          {['Dubai & UAE', 'Kerala', 'Online worldwide', 'Makeup + hair'].map((item) => (
+            <span key={item} className="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-deep-gold">
               {item}
             </span>
           ))}
         </div>
       </section>
 
-      <section className="rose-gold-gradient mesh-accent px-5 py-20 lg:px-12 lg:py-28">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
-          <SlideUp className="space-y-8">
-            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
-              A Dubai beauty brand with Kerala warmth and editorial precision.
+      <section className="blush-mesh px-5 py-20 lg:px-12 lg:py-36">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-24">
+          <SlideUp>
+            <p className="editorial-kicker">01 / The belief</p>
+            <h2 className="mt-5 max-w-[15ch] text-balance font-serif text-4xl leading-[1.05] text-deep-espresso sm:text-5xl lg:text-6xl">
+              Beauty is not applied in one step. It is built in layers.
             </h2>
-            <p className="text-lg font-light leading-8 text-soft-espresso/78">
-              LayeR by Laya creates makeup and hair that photographs beautifully, survives real event hours, and feels polished in person. Every look is built with skin architecture, balanced sculpting, and delicate hair integration rather than heavy template glam.
+            <p className="mt-8 max-w-2xl text-base font-light leading-8 text-soft-espresso/78 lg:text-lg">
+              Skin, structure, colour, hair, and finish are planned as one complete look—personal to your features, considered with your outfit, and refined for real life and the camera.
             </p>
-            <Link href="/services" className="inline-flex border-b border-metallic-gold pb-2 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:text-deep-gold">
-              Explore services
-            </Link>
+            <div className="mt-9 h-px w-28 bg-metallic-gold/65" aria-hidden="true" />
           </SlideUp>
-          <div className="grid grid-cols-2 gap-4 lg:gap-6">
-            <EditorialImage src={generatedImages.homeSecondary} alt="Luxury campaign beauty image" aspect="aspect-[3/4]" objectPosition="center" className="mt-10" />
-            <EditorialImage src={generatedImages.brandDetailTwo} alt="Blush and champagne LayeR brand detail for premium beauty direction" aspect="aspect-[3/4]" objectPosition="center" className="mb-10" />
+          <div className="relative mx-auto w-full max-w-lg lg:mr-0">
+            <EditorialImage
+              src={generatedImages.aboutWorkspace}
+              alt="Champagne beauty tools and texture expressing the LayeR philosophy"
+              aspect="aspect-[4/5]"
+              objectPosition="center"
+            />
+            <div className="caption-ribbon absolute -bottom-5 left-5 right-5 z-10 px-5 py-4 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-deep-espresso sm:left-auto sm:right-[-1rem] sm:w-64">
+              Skin · Structure · Colour · Hair · Finish
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="gold-section-divider mb-0" aria-hidden="true" />
-      <section className="blush-mesh px-5 py-20 lg:px-12 lg:py-32">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          <EditorialImage src={generatedImages.editorialOne} alt="Close-up editorial beauty detail for the LayeR Method" aspect="aspect-[4/5]" objectPosition="center" />
-          <div className="space-y-12">
-            <SectionIntro
-              align="left"
-              title="The LayeR Method"
-              label="01 / Method"
-              body="A refined sequence for luminous skin, balanced structure, and hair that belongs to the final silhouette."
-            />
-            <ServiceList
-              items={[
-                { title: 'Skin Architecture', body: 'Prep, hydration, base tone, and texture decisions are built around your actual skin.' },
-                { title: 'Soft Sculpting', body: 'Light, shadow, lashes, lip tone, and brows are balanced so the face stays expressive.' },
-                { title: 'Hair Integration', body: 'Waves, buns, jasmine, veils, and accessories are planned with the makeup rather than added later.' },
-              ]}
-            />
-          </div>
-        </div>
-      </section>
-
-      <div className="gold-section-divider" aria-hidden="true" />
       <section className="champagne-band px-5 py-20 lg:px-12 lg:py-32">
         <div className="mx-auto max-w-7xl">
           <SectionIntro
-            title="UAE, Kerala, and online beauty services"
-            label="02 / Services"
-            body="Choose the lane that matches your moment, then refine the look directly with Laya through WhatsApp."
+            title="The LayeR Method"
+            label="02 / Signature process"
+            body="A five-part beauty process that keeps every decision connected—from the first skin-prep choice to the final camera check."
           />
-          <StaggerContainer className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {services.map((service) => (
-              <StaggerItem key={service.title}>
-                <Link href={service.href} className="group card-lift block">
-                  <div className="editorial-frame relative aspect-[4/5] overflow-hidden bg-warm-ivory">
-                    <Image src={service.image} alt={`${service.title} campaign visual`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
-                    <div className="pointer-events-none absolute inset-0 border border-white/60" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-blush-paper/76 px-4 py-3 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-deep-espresso backdrop-blur-md">
-                      {String(services.indexOf(service) + 1).padStart(2, '0')} / {service.title}
-                    </div>
-                  </div>
-                  <h3 className="mt-7 font-serif text-3xl text-deep-espresso">{service.title}</h3>
-                  <p className="mt-3 text-sm font-light leading-6 text-soft-espresso/72">{service.body}</p>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <SlideUp className="space-y-8">
-            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
-              Bridal campaign direction for Dubai and Kerala.
-            </h2>
-            <p className="text-lg font-light leading-8 text-soft-espresso/78">
-              Dubai brides need a polished suite-ready finish. Kerala brides need warmth, jasmine, gold, and saree-aware styling. Both need makeup and hair that holds under emotion, weather, photography, and long timelines.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/bridal-makeup-dubai" className="border border-deep-espresso px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">Dubai bridal</Link>
-              <Link href="/bridal-makeup-kerala" className="border border-deep-espresso/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">Kerala bridal</Link>
-            </div>
-          </SlideUp>
-          <div className="grid grid-cols-2 gap-4 lg:gap-6">
-            <EditorialImage src={generatedImages.bridalDubaiSecondary} alt="Dubai bridal editorial campaign visual" aspect="aspect-[3/4]" objectPosition="center 35%" className="mt-12" />
-            <EditorialImage src={generatedImages.bridalKeralaHero} alt="Kerala bridal editorial campaign visual" aspect="aspect-[3/4]" objectPosition="center 25%" className="mb-12" />
-          </div>
-        </div>
-      </section>
-
-      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-          <div className="grid grid-cols-2 gap-4 lg:gap-6">
-            <EditorialImage src={generatedImages.hairOne} alt="Luxury hair styling waves and accessory detail" aspect="aspect-[3/4]" objectPosition="center" />
-            <EditorialImage src={generatedImages.onlineHero} alt="Online makeup consultation campaign setup" aspect="aspect-[3/4]" objectPosition="center" className="mt-12" />
-          </div>
-          <SlideUp className="space-y-8">
-            <h2 className="text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">
-              Hair styling and online consultation, treated with the same luxury eye.
-            </h2>
-            <p className="text-lg font-light leading-8 text-soft-espresso/78">
-              From soft bridal waves to a practical daily makeup consultation, LayeR keeps the finish elegant, teachable, and personal. Online sessions cover routine design, kit audit, bridal look planning, and one-to-one makeup lessons.
-            </p>
-            <Link href="/online-makeup-consultation" className="inline-flex bg-deep-espresso px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:bg-metallic-gold hover:text-deep-espresso">
-              Plan online
-            </Link>
-          </SlideUp>
-        </div>
-      </section>
-
-      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
-        <div className="mx-auto max-w-7xl text-center">
-          <SectionIntro
-            title="Real portfolio, real LayeR work"
-            label="03 / Portfolio"
-            body="The portfolio presents selected real work, while service pages communicate the mood, finish, and level of detail clients can expect."
-          />
-          <CampaignImageNote />
-          <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
-            {['01', '02', '03', '04'].map((id, index) => (
-              <FadeIn key={id} delay={index * 0.08} className={`relative aspect-[3/4] overflow-hidden bg-warm-ivory ${index === 1 || index === 3 ? 'md:mt-10' : ''}`}>
-                <Link href="/portfolio" className="group block h-full w-full">
-                  <Image src={`/assets/images/portfolio/portfolio-${id}.jpg`} alt={`Real LayeR portfolio preview ${id}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-          <Link href="/portfolio" className="mt-12 inline-flex border border-deep-espresso px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">
-            View real portfolio
-          </Link>
-        </div>
-      </section>
-
-      <div className="gold-section-divider" aria-hidden="true" />
-      <section id="book" className="champagne-mesh scroll-mt-24 px-5 py-20 lg:px-12 lg:py-32">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div className="space-y-10">
-            <SectionIntro
-              align="left"
-              title="Begin your booking"
-              label="04 / Booking"
-              body="Share your date and moment. Laya replies personally with availability, packages, and honest guidance — whether your event is in Dubai, Kerala, or your consultation is online from anywhere in the world."
+          <div className="relative mt-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            <EditorialImage
+              src={generatedImages.editorialOne}
+              alt="Editorial beauty close-up illustrating polished skin and refined structure"
+              aspect="aspect-[4/5]"
+              objectPosition="center"
+              caption="The method begins with the person, not a template"
             />
-            <ol className="space-y-6">
-              {[
-                { step: 'Enquire', body: 'Send the form or a WhatsApp message with your date, city, and service.' },
-                { step: 'Consult', body: 'Laya reviews your outfit, skin, references, and timeline with you.' },
-                { step: 'Your moment', body: 'A calm, camera-ready finish on the day — or a personal online session.' },
-              ].map((item, i) => (
-                <li key={item.step} className="flex gap-5">
-                  <span className="font-serif text-3xl text-metallic-gold">{String(i + 1).padStart(2, '0')}</span>
+            <ol className="relative space-y-2 lg:py-4">
+              <div className="story-rule absolute bottom-4 left-[1.35rem] top-4 w-px" aria-hidden="true" />
+              {method.map(([title, body], index) => (
+                <li key={title} className="relative grid grid-cols-[2.75rem_1fr] gap-5 border-b border-metallic-gold/20 py-6 first:pt-0 last:border-0">
+                  <span className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-metallic-gold/50 bg-champagne-light font-serif text-lg text-deep-gold">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   <div>
-                    <h3 className="font-serif text-xl text-deep-espresso">{item.step}</h3>
-                    <p className="mt-1 text-sm font-light leading-6 text-soft-espresso/74">{item.body}</p>
+                    <h3 className="font-serif text-3xl text-deep-espresso">{title}</h3>
+                    <p className="mt-2 max-w-xl text-sm font-light leading-7 text-soft-espresso/74">{body}</p>
                   </div>
                 </li>
               ))}
             </ol>
-            <div className="border-t border-metallic-gold/25 pt-6 text-sm font-light leading-7 text-soft-espresso/76">
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-24">
+          <div className="relative grid grid-cols-[1fr_0.72fr] items-end gap-4 sm:gap-6">
+            <EditorialImage src={generatedImages.bridalDubaiHero} alt="Dubai bridal makeup with polished skin and refined hair styling" aspect="aspect-[4/5]" objectPosition="center 25%" />
+            <EditorialImage src={generatedImages.bridalDubaiSecondary} alt="Dubai bridal suite beauty detail" aspect="aspect-[3/4]" objectPosition="center 35%" className="mb-10" />
+          </div>
+          <SlideUp>
+            <p className="editorial-kicker">03 / Bridal Dubai</p>
+            <h2 className="mt-5 text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">Composed for the suite, ceremony, camera, and Dubai light.</h2>
+            <p className="mt-7 text-base font-light leading-8 text-soft-espresso/78">
+              Bridal makeup and hair are planned around your skin, outfit, jewellery, venue light, weather, photography, and the pace of the day—so the finish feels calm and polished rather than heavy.
+            </p>
+            <Link href="/bridal-makeup-dubai" className="editorial-link mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso">Explore Dubai bridal</Link>
+          </SlideUp>
+        </div>
+      </section>
+
+      <section className="rose-gold-gradient px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-24">
+          <SlideUp className="lg:order-1">
+            <p className="editorial-kicker">04 / Bridal Kerala</p>
+            <h2 className="mt-5 text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-5xl">Ceremony-sensitive beauty with Kerala warmth.</h2>
+            <p className="mt-7 text-base font-light leading-8 text-soft-espresso/78">
+              Saree or gown, jasmine or veil, temple jewellery or contemporary styling—each look is balanced around tradition, skin tone, emotion, and the visual language of the ceremony.
+            </p>
+            <Link href="/bridal-makeup-kerala" className="editorial-link mt-8 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso">Explore Kerala bridal</Link>
+          </SlideUp>
+          <div className="relative grid grid-cols-[0.72fr_1fr] items-start gap-4 sm:gap-6 lg:order-2">
+            <EditorialImage src={generatedImages.bridalKeralaSecondary} alt="South Indian bridal jewellery, saree, and jasmine styling detail" aspect="aspect-[3/4]" objectPosition="center" className="mt-12" />
+            <EditorialImage src={generatedImages.bridalKeralaHero} alt="Kerala bridal makeup with jasmine and warm gold detail" aspect="aspect-[4/5]" objectPosition="center 25%" />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-warm-ivory px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro title="One beauty language, shaped for different moments" label="05 / Beyond bridal" body="Event, hair, fashion, commercial, and online work each need a different kind of control—not a recycled bridal template." />
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
+            {[
+              ['Event makeup & hair', 'Soft or full glam, polished waves, buns, and occasion-led finishing.', generatedImages.hairOne, '/party-makeup-and-hair'],
+              ['Fashion & commercial', 'Camera-ready skin, continuity, grooming, and beauty direction for production.', generatedImages.editorialTwo, '/fashion-editorial-makeup'],
+              ['Online consultation', 'Routine design, kit audit, bridal planning, and one-to-one makeup education.', generatedImages.onlineHero, '/online-makeup-consultation'],
+            ].map(([title, body, image, href], index) => (
+              <Link key={title} href={href} className={`group block ${index === 1 ? 'md:mt-12' : ''}`}>
+                <div className="editorial-frame relative aspect-[4/5] overflow-hidden bg-blush-paper">
+                  <Image src={image} alt={`${title} by LayeR by Laya`} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
+                  <div className="caption-ribbon absolute bottom-4 left-4 px-4 py-3 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-deep-espresso">0{index + 1} / {title}</div>
+                </div>
+                <h3 className="mt-7 font-serif text-3xl text-deep-espresso">{title}</h3>
+                <p className="mt-3 text-sm font-light leading-7 text-soft-espresso/74">{body}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-blush-paper px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro title="Selected real work" label="06 / Portfolio" body="Real clients, real makeup, and real hair work—kept separate from the campaign imagery used to communicate service direction." />
+          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+            {portfolioImages.slice(0, 4).map((item, index) => (
+              <Link key={item.id} href="/portfolio" aria-label={`Explore the real portfolio: ${item.title}`} className={`group relative block aspect-[3/4] overflow-hidden bg-warm-ivory ${index % 2 ? 'md:mt-10' : ''}`}>
+                <Image src={item.src} alt={item.alt} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/portfolio" className="inline-flex border border-deep-espresso px-8 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">View the real portfolio</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-deep-espresso px-5 py-20 text-blush-paper lg:px-12 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-center text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-metallic-gold">07 / What you can expect</p>
+          <div className="mt-10 grid gap-px bg-metallic-gold/25 sm:grid-cols-2 lg:grid-cols-5">
+            {proofPoints.map((point) => (
+              <div key={point} className="bg-deep-espresso px-6 py-8 text-center text-sm font-light leading-6 text-blush-paper/82">{point}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="book" className="champagne-mesh scroll-mt-24 px-5 py-20 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+          <div>
+            <SectionIntro align="left" title="A clear path to your booking" label="08 / Begin" body="Share the moment, receive personal guidance, and confirm only when the service, location, and plan are clear." />
+            <ol className="mt-10 space-y-7">
+              {[
+                ['Share your date and details', 'Send your city, date, service, timing, outfit, and reference direction.'],
+                ['Receive personalised guidance', 'Laya considers the right service, look direction, and practical next step with you.'],
+                ['Confirm your booking', 'Once availability and details are agreed, complete the confirmation process shared with you.'],
+              ].map(([step, body], index) => (
+                <li key={step} className="grid grid-cols-[2.75rem_1fr] gap-5">
+                  <span className="font-serif text-3xl text-metallic-gold">{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="font-serif text-xl text-deep-espresso">{step}</h3>
+                    <p className="mt-2 text-sm font-light leading-6 text-soft-espresso/74">{body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-9 border-t border-metallic-gold/25 pt-6 text-sm font-light leading-7 text-soft-espresso/76">
               <p>WhatsApp: {brand.phoneDisplay}</p>
-              <p>Dubai, UAE &middot; Kerala, India &middot; Online worldwide</p>
+              <p>Dubai, UAE · Kerala, India · Online worldwide</p>
             </div>
           </div>
           <BookingForm />
@@ -271,21 +260,15 @@ export default function Home() {
       </section>
 
       <FAQSection faqs={homeFaqs} />
-      <InternalLinkSection />
 
-      <section className="bg-deep-espresso px-5 py-20 text-center text-blush-paper lg:px-12 lg:py-28">
-        <SlideUp className="mx-auto max-w-3xl">
-          <h2 className="font-serif text-4xl leading-tight md:text-5xl">Ready to build your LayeR look?</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-8 text-blush-paper/78">
-            Send your date, city, event type, and preferred finish. Laya will guide you toward the right bridal, party, hair, editorial, or online consultation option.
-          </p>
+      <section className="rose-gold-gradient px-5 py-20 text-center lg:px-12 lg:py-28">
+        <SlideUp className="mx-auto max-w-4xl">
+          <p className="editorial-kicker">The LayeR promise</p>
+          <h2 className="mt-5 text-balance font-serif text-4xl leading-tight text-deep-espresso md:text-6xl">A look should still feel like you—only more considered.</h2>
+          <p className="mx-auto mt-7 max-w-2xl text-base font-light leading-8 text-soft-espresso/78">Begin with your date, place, and vision. The rest is built with care, one layer at a time.</p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse inline-flex bg-metallic-gold px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:bg-blush-paper">
-              Book on WhatsApp
-            </a>
-            <a href={brand.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex border border-blush-paper/35 px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:border-metallic-gold hover:text-metallic-gold">
-              Follow @layerbylaya
-            </a>
+            <a href={whatsappLinks.general} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse inline-flex bg-deep-espresso px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-blush-paper transition-colors hover:bg-metallic-gold hover:text-deep-espresso">Book on WhatsApp</a>
+            <a href={brand.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex border border-deep-espresso/25 px-9 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-deep-espresso transition-colors hover:border-metallic-gold hover:text-deep-gold">Follow @layerbylaya</a>
           </div>
         </SlideUp>
       </section>

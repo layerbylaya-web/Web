@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
-import { assetLibrary, imageSlotGroups, type SiteImageSlot } from '@/data/siteImages';
+import { assetLibrary, blockedImageAssets, imageSlotGroups, type SiteImageSlot } from '@/data/siteImages';
 
-function configSnippet(slot: SiteImageSlot, src: string, objectPosition: string) {
+function configSnippet(slot: SiteImageSlot, src: string, objectPosition: string, mobileObjectPosition: string) {
   return `{
   id: "${slot.id}",
   page: "${slot.page}",
@@ -13,16 +13,22 @@ function configSnippet(slot: SiteImageSlot, src: string, objectPosition: string)
   alt: "${slot.alt}",
   type: "${slot.type}",
   objectPosition: "${objectPosition}",
-  ratio: "${slot.ratio}"
+  mobileObjectPosition: "${mobileObjectPosition}",
+  ratio: "${slot.ratio}"${slot.status ? `,\n  status: "${slot.status}"` : ''}
 }`;
 }
 
 function ImageSlotCard({ slot }: { slot: SiteImageSlot }) {
   const [draftSrc, setDraftSrc] = useState(slot.src);
   const [objectPosition, setObjectPosition] = useState(slot.objectPosition);
+  const [mobileObjectPosition, setMobileObjectPosition] = useState(slot.mobileObjectPosition ?? slot.objectPosition);
   const [copied, setCopied] = useState(false);
+  const isBlockedSource = blockedImageAssets.includes(draftSrc as (typeof blockedImageAssets)[number]);
 
-  const snippet = useMemo(() => configSnippet(slot, draftSrc, objectPosition), [draftSrc, objectPosition, slot]);
+  const snippet = useMemo(
+    () => configSnippet(slot, draftSrc, objectPosition, mobileObjectPosition),
+    [draftSrc, mobileObjectPosition, objectPosition, slot],
+  );
 
   async function copySnippet() {
     await navigator.clipboard.writeText(snippet);
@@ -61,6 +67,14 @@ function ImageSlotCard({ slot }: { slot: SiteImageSlot }) {
             <dt className="text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-muted-taupe">Object position</dt>
             <dd>{objectPosition}</dd>
           </div>
+          <div>
+            <dt className="text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-muted-taupe">Mobile crop guidance</dt>
+            <dd>{mobileObjectPosition}</dd>
+          </div>
+          <div>
+            <dt className="text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-muted-taupe">Status</dt>
+            <dd>{slot.status ?? 'active'}</dd>
+          </div>
           <div className="sm:col-span-2">
             <dt className="text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-muted-taupe">Alt text</dt>
             <dd>{slot.alt}</dd>
@@ -92,7 +106,21 @@ function ImageSlotCard({ slot }: { slot: SiteImageSlot }) {
               className="min-h-11 border border-dusty-rose-border bg-blush-paper px-3 text-sm font-normal normal-case tracking-normal outline-none transition focus:border-metallic-gold"
             />
           </label>
+          <label className="grid gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-deep-espresso">
+            Mobile crop guidance
+            <input
+              value={mobileObjectPosition}
+              onChange={(event) => setMobileObjectPosition(event.target.value)}
+              placeholder="center 20%"
+              className="min-h-11 border border-dusty-rose-border bg-blush-paper px-3 text-sm font-normal normal-case tracking-normal outline-none transition focus:border-metallic-gold"
+            />
+          </label>
         </div>
+        {isBlockedSource && (
+          <p className="border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
+            Blocked asset. Do not restore this path to any live slot.
+          </p>
+        )}
 
         <button
           type="button"
@@ -115,6 +143,8 @@ export default function AdminImageManager() {
     'Generated Campaign Images',
     'Brand Detail Images',
     'Image Crop/Object Position Lab',
+    'Mobile Crop Guidance',
+    'Reserved Founder Slot Tracking',
     'Alt Text / SEO Image Notes',
   ];
 
@@ -138,6 +168,10 @@ export default function AdminImageManager() {
             No uploads or write operations are exposed here. Future CMS/storage connections can plug into the same
             `siteImages` structure for Sanity, Strapi, Payload CMS, Supabase storage, Vercel Blob, or Cloudinary.
           </p>
+          <p className="mt-4 max-w-3xl text-sm font-light leading-7 text-soft-espresso/70">
+            Governance guardrails: mobile crops are tracked separately, the founder portrait slot stays internal until a
+            verified real portrait exists, and blocked assets remain excluded from reusable slot suggestions.
+          </p>
           <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted-taupe">
             {adminPreviewMode}
           </p>
@@ -149,6 +183,24 @@ export default function AdminImageManager() {
             ))}
           </div>
         </div>
+
+        <section className="mt-12 space-y-4 border border-dusty-rose-border/55 bg-white/44 p-5 shadow-[0_20px_70px_rgba(42,23,18,0.06)] backdrop-blur-md">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-deep-gold">Blocked assets</p>
+              <h2 className="mt-2 font-serif text-3xl text-deep-espresso">Do not reuse</h2>
+            </div>
+            <p className="text-xs font-light uppercase tracking-[0.16em] text-muted-taupe">{blockedImageAssets.length} blocked path</p>
+          </div>
+          <div className="grid gap-3">
+            {blockedImageAssets.map((asset) => (
+              <div key={asset} className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <p className="font-semibold">{asset}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-red-700">Blocked pending replacement or removal</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="mt-12 grid gap-10">
           {imageSlotGroups.map((group, index) => (

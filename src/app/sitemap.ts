@@ -18,15 +18,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/about-laya', priority: 0.7 },
     { path: '/contact', priority: 0.9 },
     { path: '/faq', priority: 0.6 },
-    { path: '/blog', priority: 0.5 },
     { path: '/privacy', priority: 0.2 },
     { path: '/terms', priority: 0.2 },
   ];
 
   return routes.map((route) => ({
     url: `${siteUrl}${route.path}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    // Omit lastmod until an actual per-page modification date is available.
     priority: route.priority,
   }));
 }

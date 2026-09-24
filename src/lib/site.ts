@@ -4,7 +4,8 @@ import { assetLibrary, generatedImages, imageSlotGroups, imageSlots, siteImages 
 export { assetLibrary, generatedImages, imageSlotGroups, imageSlots, siteImages };
 export type { SiteImageSlot, SiteImageType } from '@/data/siteImages';
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://layerbylaya.com';
+// The public canonical origin must remain stable on preview deployments.
+export const siteUrl = 'https://layerbylaya.com';
 
 export const brand = {
   name: 'LayeR by Laya',
@@ -68,6 +69,12 @@ export function pageMetadata({
       url: `${siteUrl}${path}`,
       images: [{ url: image }],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 
@@ -91,7 +98,13 @@ export function serviceSchema({
       '@id': `${siteUrl}/#organization`,
     },
     image: `${siteUrl}${image}`,
-    areaServed: ['Dubai, UAE', 'Kerala, India', 'Online'],
+    ...(path.includes('online') || path.includes('consultation') || path.includes('kit-audit')
+      ? { areaServed: 'Online' }
+      : path.includes('kerala')
+        ? { areaServed: 'Kerala, India' }
+        : path.includes('dubai')
+          ? { areaServed: 'Dubai, United Arab Emirates' }
+          : {}),
   };
 }
 

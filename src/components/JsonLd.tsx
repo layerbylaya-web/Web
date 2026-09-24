@@ -3,7 +3,7 @@ import { brand, siteUrl } from '@/lib/site';
 export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] }) {
   const baseSchema = [
     {
-      "@type": "BeautySalon",
+      "@type": "Organization",
       "@id": `${siteUrl}/#organization`,
       "name": "LayeR by Laya",
       "alternateName": "LayeR",
@@ -13,7 +13,6 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
       "description": "Premium makeup artist and hair stylist serving Dubai, the UAE, and Kerala, India. Luxury bridal makeup, party glam, fashion and editorial styling, commercial productions, and one-to-one online makeup consultations worldwide.",
       "telephone": brand.phone,
       "email": brand.email,
-      "priceRange": "$$",
       "founder": {
         "@type": "Person",
         "name": "Laya",
@@ -25,18 +24,11 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
         "@type": "ContactPoint",
         "contactType": "Bookings",
         "telephone": brand.phone,
-        "email": brand.email,
-        "availableLanguage": ["English", "Malayalam", "Hindi"]
+        "email": brand.email
       },
       "areaServed": [
         { "@type": "City", "name": "Dubai", "containedInPlace": { "@type": "Country", "name": "United Arab Emirates" } },
-        { "@type": "City", "name": "Abu Dhabi", "containedInPlace": { "@type": "Country", "name": "United Arab Emirates" } },
-        { "@type": "City", "name": "Sharjah", "containedInPlace": { "@type": "Country", "name": "United Arab Emirates" } },
-        { "@type": "City", "name": "Kochi", "containedInPlace": { "@type": "State", "name": "Kerala" } },
-        { "@type": "City", "name": "Kottayam", "containedInPlace": { "@type": "State", "name": "Kerala" } },
-        { "@type": "City", "name": "Thiruvananthapuram", "containedInPlace": { "@type": "State", "name": "Kerala" } },
-        { "@type": "City", "name": "Thrissur", "containedInPlace": { "@type": "State", "name": "Kerala" } },
-        { "@type": "City", "name": "Kozhikode", "containedInPlace": { "@type": "State", "name": "Kerala" } },
+        { "@type": "State", "name": "Kerala", "containedInPlace": { "@type": "Country", "name": "India" } },
         { "@type": "Place", "name": "Worldwide (online consultations)" }
       ],
       "hasOfferCatalog": {
@@ -73,7 +65,7 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
     />
   );
 }

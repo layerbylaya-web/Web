@@ -17,13 +17,13 @@ export default function PrivacyPage() {
             LayeR by Laya collects only the details you choose to share when you enquire — such as your name, contact number, email, event date, and location. This information is used solely to respond to your enquiry, plan your booking, and provide the service you requested.
           </p>
           <p>
-            Your details are never sold, rented, or shared with third parties for marketing. Enquiries sent through the website form are delivered by email; messages sent on WhatsApp are handled under WhatsApp&apos;s own terms.
+            Enquiries sent through the website form are processed by our email delivery provider (Resend when configured, or FormSubmit as a temporary fallback). We use the details to answer your enquiry and do not sell them or share them for third-party marketing. Messages sent on WhatsApp are also subject to WhatsApp&apos;s privacy practices.
           </p>
           <p>
-            Basic, anonymous analytics may be used to understand how visitors use the site and improve it. No personal profiles are built from this data.
+            Vercel Web Analytics is used to understand site visits and improve the website.
           </p>
           <p>
-            To have your enquiry details removed, message {brand.phoneDisplay} on WhatsApp or email {brand.email}, and they will be deleted.
+            To ask about or request deletion of your enquiry details, message {brand.phoneDisplay} on WhatsApp or email {brand.email}. We will address the request and advise if the email provider retains a copy under its own policy.
           </p>
         </div>
       </div>

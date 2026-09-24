@@ -4,12 +4,15 @@ import { FAQSection, InternalLinkSection } from '@/components/PremiumSections';
 import { SlideUp } from '@/components/AnimationWrappers';
 import { breadcrumbSchema, commonFaqs, faqSchema, generatedImages, pageMetadata, siteUrl } from '@/lib/site';
 
-export const metadata: Metadata = pageMetadata({
+export const metadata: Metadata = {
+  ...pageMetadata({
   title: 'Beauty Journal',
   description: 'The LayeR by Laya beauty journal for future notes on bridal makeup Dubai, bridal makeup Kerala, online makeup consultation, and refined daily beauty.',
   path: '/blog',
   image: generatedImages.editorialOne,
-});
+  }),
+  robots: { index: false, follow: false },
+};
 
 const faqs = [
   {

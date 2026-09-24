@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { FadeIn } from './AnimationWrappers';
 
-const FORM_EMAIL = 'rahultb1996@gmail.com'; // Lead notifications are delivered here via FormSubmit
+const FORM_EMAIL = 'rahultb1996@gmail.com';
 
 const services = [
   'Bridal Makeup & Hair — Dubai / UAE',
@@ -24,10 +25,12 @@ const locations = [
   'Online — I can join from anywhere',
 ];
 
-type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Status = 'idle' | 'sending' | 'sent' | 'fallback-sent' | 'error';
 
 export default function BookingForm({ compact = false }: { compact?: boolean }) {
   const [status, setStatus] = useState<Status>('idle');
+  const [error, setError] = useState('');
+  const [privacyConsent, setPrivacyConsent] = useState(false);
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -35,7 +38,13 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
     service: services[0],
     location: locations[0],
     date: '',
+    eventType: '',
+    people: '',
+    preferredTime: '',
+    instagram: '',
+    referral: '',
     message: '',
+    website: '',
   });
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
@@ -47,6 +56,13 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
       form.location && `Location: ${form.location}`,
       form.date && `Date: ${form.date}`,
       form.name && `Name: ${form.name}`,
+      form.phone && `Phone: ${form.phone}`,
+      form.email && `Email: ${form.email}`,
+      form.eventType && `Event type: ${form.eventType}`,
+      form.people && `People: ${form.people}`,
+      form.preferredTime && `Preferred time: ${form.preferredTime}`,
+      form.instagram && `Instagram: ${form.instagram}`,
+      form.referral && `How I found LayeR: ${form.referral}`,
       form.message && `Details: ${form.message}`,
     ].filter(Boolean);
     return `https://wa.me/971547467995?text=${encodeURIComponent(lines.join('\n'))}`;
@@ -54,13 +70,30 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
 
   const submitEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || (!form.email && !form.phone)) {
+    if (!form.name.trim() || (!form.email.trim() && !form.phone.trim()) || !privacyConsent) {
+      setError('Add your name, a contact method, and privacy consent.');
       setStatus('error');
       return;
     }
     setStatus('sending');
+    setError('');
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`, {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, privacyConsent }),
+      });
+      if (response.ok) {
+        setStatus('sent');
+        return;
+      }
+      const result = await response.json() as { error?: string; fallback?: boolean };
+      if (response.status !== 503 || !result.fallback) {
+        setError(result.error || 'Could not send your enquiry. Please try WhatsApp.');
+        setStatus('error');
+        return;
+      }
+      const fallback = await fetch(`https://formsubmit.co/ajax/${FORM_EMAIL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -72,11 +105,23 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
           Service: form.service,
           Location: form.location,
           'Event date': form.date,
+          'Event type': form.eventType,
+          'Number of people': form.people,
+          'Preferred time': form.preferredTime,
+          Instagram: form.instagram,
+          'How they found LayeR': form.referral,
           Message: form.message,
         }),
       });
-      setStatus(res.ok ? 'sent' : 'error');
+      const fallbackResult = await fallback.json().catch(() => null) as { success?: string | boolean } | null;
+      if (fallback.ok && (fallbackResult?.success === 'true' || fallbackResult?.success === true)) {
+        setStatus('fallback-sent');
+      } else {
+        setError('The email service did not confirm delivery. Please use WhatsApp.');
+        setStatus('error');
+      }
     } catch {
+      setError('Could not send your enquiry. Please use WhatsApp.');
       setStatus('error');
     }
   };
@@ -85,12 +130,12 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
     'w-full border border-dusty-rose-border/60 bg-white/70 px-4 py-3.5 text-sm text-deep-espresso placeholder:text-muted-taupe/70 outline-none transition-colors focus:border-metallic-gold backdrop-blur-sm';
   const labelClass = 'mb-2 block text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-deep-gold';
 
-  if (status === 'sent') {
+  if (status === 'sent' || status === 'fallback-sent') {
     return (
       <FadeIn className="glass-panel px-8 py-14 text-center">
-        <h3 className="font-serif text-3xl text-deep-espresso">Enquiry received ✨</h3>
+        <h3 className="font-serif text-3xl text-deep-espresso">{status === 'sent' ? 'Enquiry submitted ✨' : 'Enquiry passed to email service ✨'}</h3>
         <p className="mx-auto mt-4 max-w-md text-sm font-light leading-7 text-soft-espresso/78">
-          Thank you, {form.name.split(' ')[0]}. Laya will personally review your date and reply shortly. For the fastest response, you can also continue on WhatsApp.
+          Thank you, {form.name.split(' ')[0]}. {status === 'fallback-sent' ? 'The temporary email service accepted your enquiry; delivery has not been independently confirmed.' : 'Your enquiry was accepted by the email service.'} For the fastest follow-up, continue on WhatsApp.
         </p>
         <a
           href={whatsappHref()}
@@ -105,7 +150,7 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
   }
 
   return (
-    <form onSubmit={submitEmail} className={compact ? '' : 'glass-panel px-6 py-8 lg:px-10 lg:py-12'} noValidate>
+    <form onSubmit={submitEmail} className={compact ? '' : 'glass-panel px-6 py-8 lg:px-10 lg:py-12'}>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="bf-name" className={labelClass}>Your name *</label>
@@ -146,11 +191,24 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
             onChange={update('message')}
           />
         </div>
+        <div className="sm:col-span-2 grid gap-5 sm:grid-cols-2">
+          <div><label htmlFor="bf-event-type" className={labelClass}>Event type</label><input id="bf-event-type" maxLength={120} className={inputClass} value={form.eventType} onChange={update('eventType')} placeholder="Wedding, shoot, consultation…" /></div>
+          <div><label htmlFor="bf-people" className={labelClass}>Number of people</label><input id="bf-people" maxLength={20} className={inputClass} value={form.people} onChange={update('people')} placeholder="For example, 2" /></div>
+          <div><label htmlFor="bf-time" className={labelClass}>Preferred time</label><input id="bf-time" maxLength={80} className={inputClass} value={form.preferredTime} onChange={update('preferredTime')} placeholder="Morning, afternoon…" /></div>
+          <div><label htmlFor="bf-instagram" className={labelClass}>Instagram handle (optional)</label><input id="bf-instagram" maxLength={100} className={inputClass} value={form.instagram} onChange={update('instagram')} placeholder="@handle" /></div>
+          <div className="sm:col-span-2"><label htmlFor="bf-referral" className={labelClass}>How did you find LayeR?</label><input id="bf-referral" maxLength={120} className={inputClass} value={form.referral} onChange={update('referral')} /></div>
+        </div>
       </div>
 
+      <div className="absolute -left-[10000px]" aria-hidden="true"><label htmlFor="bf-website">Website</label><input id="bf-website" tabIndex={-1} autoComplete="off" value={form.website} onChange={update('website')} /></div>
+      <label className="mt-6 flex items-start gap-3 text-sm text-soft-espresso/78">
+        <input type="checkbox" required checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} className="mt-1" />
+        <span>I agree to share these details for a response to my enquiry. Read the <Link href="/privacy" className="underline">privacy policy</Link>.</span>
+      </label>
+
       {status === 'error' && (
-        <p className="mt-4 text-xs font-medium text-rose-wine">
-          Please add your name and at least one way to reach you (WhatsApp or email), then try again — or use the WhatsApp button below.
+        <p role="alert" className="mt-4 text-xs font-medium text-rose-wine">
+          {error}
         </p>
       )}
 
@@ -172,7 +230,7 @@ export default function BookingForm({ compact = false }: { compact?: boolean }) 
         </a>
       </div>
       <p className="mt-4 text-center text-[0.68rem] font-light text-muted-taupe">
-        Your details go directly to Laya and are never shared. Replies usually within a few hours.
+        Prefer WhatsApp if you want to continue the conversation right away.
       </p>
     </form>
   );

@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { FadeIn } from './AnimationWrappers';
 
@@ -9,15 +10,59 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuFirstLinkRef = useRef<HTMLAnchorElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const menuWasOpenedRef = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      setPastHero(window.scrollY > 400);
+      setPastHero(window.scrollY > window.innerHeight * 0.75);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = '';
+      if (menuWasOpenedRef.current) mobileMenuButtonRef.current?.focus();
+      return;
+    }
+
+    menuWasOpenedRef.current = true;
+    document.body.style.overflow = 'hidden';
+    mobileMenuFirstLinkRef.current?.focus();
+    const background = [document.querySelector('main'), document.querySelector('footer')];
+    background.forEach((element) => { if (element instanceof HTMLElement) element.inert = true; });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      } else if (event.key === 'Tab') {
+        const focusables = [mobileMenuButtonRef.current, ...Array.from(mobileMenuRef.current?.querySelectorAll<HTMLElement>('a[href]') ?? [])].filter((item): item is HTMLElement => Boolean(item));
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      background.forEach((element) => { if (element instanceof HTMLElement) element.inert = false; });
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: 'Services', href: '/services' },
@@ -52,18 +97,30 @@ export default function Header() {
               {link.name}
             </Link>
           ))}
-          <a href={whatsappBookLink} target="_blank" rel="noopener noreferrer" aria-label="Book Laya on WhatsApp" className="whatsapp-pulse ml-2 border border-deep-espresso bg-deep-espresso px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-blush-paper transition-all hover:border-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso">
+          <a href={whatsappBookLink} target="_blank" rel="noopener noreferrer" className="whatsapp-pulse ml-2 border border-deep-espresso bg-deep-espresso px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-blush-paper transition-all hover:border-metallic-gold hover:bg-metallic-gold hover:text-deep-espresso">
             Book WhatsApp
           </a>
         </nav>
 
         {/* Mobile Toggle */}
-        <button className="relative z-50 p-2 lg:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle Menu">
+        <button
+          ref={mobileMenuButtonRef}
+          type="button"
+          className="relative z-50 p-2 lg:hidden"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+        >
           {mobileMenuOpen ? <X size={32} className="text-deep-espresso" /> : <Menu size={32} className="text-deep-espresso" />}
         </button>
 
         {/* Mobile Nav */}
         <div
+          ref={mobileMenuRef}
+          id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
           aria-hidden={!mobileMenuOpen}
           className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-champagne-light transition-all duration-500 ease-in-out lg:hidden ${mobileMenuOpen ? 'visible translate-y-0 opacity-100' : 'invisible pointer-events-none -translate-y-[120%] opacity-0'}`}
         >
@@ -72,6 +129,7 @@ export default function Header() {
               <Link 
                 key={link.name} 
                 href={link.href} 
+                ref={link === navLinks[0] ? mobileMenuFirstLinkRef : undefined}
                 className="text-3xl font-serif text-deep-espresso hover:text-metallic-gold transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -97,7 +155,7 @@ export default function Header() {
       rel="noopener noreferrer"
       aria-label="Book Laya on WhatsApp"
       className={`whatsapp-pulse fixed bottom-4 left-4 right-4 z-40 bg-botanical-sage px-6 py-4 text-center text-xs font-semibold uppercase tracking-[0.16em] text-white shadow-[0_18px_45px_rgba(42,23,18,0.22)] transition-all duration-500 lg:hidden ${
-        pastHero ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
+        pastHero && pathname !== '/contact' && !mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
       }`}
     >
       Book Laya on WhatsApp

@@ -39,15 +39,17 @@ export default function ContactPage() {
       ]} />
       <div className="luxury-gradient min-h-screen px-5 pb-20 pt-32 lg:px-12 lg:pt-40">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
-          <EditorialImage
-            src={generatedImages.brandDetailOne}
-            alt="Editorial brand mood visual for contacting LayeR by Laya"
-            aspect="aspect-[4/5]"
-            objectPosition="center"
-            priority
-          />
+          <div className="order-2 lg:order-1">
+            <EditorialImage
+              src={generatedImages.brandDetailOne}
+              alt="Editorial brand mood visual for contacting LayeR by Laya"
+              aspect="aspect-[4/5]"
+              objectPosition="center"
+              priority
+            />
+          </div>
 
-          <div className="space-y-10">
+          <div className="order-1 space-y-8 lg:order-2 lg:space-y-10">
             <div>
               <h1 className="text-balance font-serif text-5xl leading-tight text-deep-espresso md:text-7xl">
                 {siteContent.contact.h1}

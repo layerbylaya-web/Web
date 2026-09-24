@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { siteUrl } from "@/lib/site";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -21,7 +22,8 @@ export const metadata: Metadata = {
     default: "LayeR by Laya | Luxury Makeup & Hair Styling — Dubai, UAE & Kerala",
   },
   description: "Luxury bridal, party, and editorial makeup with hair styling by Laya — on location across Dubai, the UAE, and Kerala, plus one-to-one online makeup consultations worldwide.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://layerbylaya.com'),
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: siteUrl },
   applicationName: 'LayeR by Laya',
   keywords: [
     'bridal makeup artist Dubai', 'bridal makeup Kerala', 'makeup artist UAE',
@@ -35,6 +37,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
+    url: siteUrl,
     siteName: 'LayeR by Laya',
     locale: 'en_US',
     images: [{ url: '/assets/images/generated/home/home-hero-luxury-01.webp', width: 1200, height: 1500, alt: 'LayeR by Laya — luxury makeup and hair styling' }],
@@ -61,7 +64,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <Analytics />
+        {process.env.VERCEL === '1' && <Analytics />}
       </body>
     </html>
   );
