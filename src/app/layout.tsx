@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
-import { siteUrl } from "@/lib/site";
+import { brand, siteUrl, socialPreview } from "@/lib/site";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -19,7 +19,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: {
     template: "%s | LayeR by Laya",
-    default: "LayeR by Laya | Luxury Makeup & Hair Styling — Dubai, UAE & Kerala",
+    default: "LayeR by Laya | Premium Makeup & Hair Styling",
   },
   description: "Luxury bridal, party, and editorial makeup with hair styling by Laya — on location across Dubai, the UAE, and Kerala, plus one-to-one online makeup consultations worldwide.",
   metadataBase: new URL(siteUrl),
@@ -38,14 +38,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: siteUrl,
-    siteName: 'LayeR by Laya',
+    siteName: brand.name,
+    title: 'LayeR by Laya | Premium Makeup & Hair Styling',
+    description: 'Premium bridal, event and editorial makeup with hair styling by Laya across the UAE and Kerala, plus personal online consultations worldwide.',
     locale: 'en_US',
-    images: [{ url: '/assets/images/generated/home/home-hero-luxury-01.webp', width: 1200, height: 1500, alt: 'LayeR by Laya — luxury makeup and hair styling' }],
+    images: [socialPreview],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LayeR by Laya | Luxury Makeup & Hair Styling — Dubai & Kerala',
+    title: 'LayeR by Laya | Premium Makeup & Hair Styling',
     description: 'Bridal, party, and editorial makeup in Dubai, the UAE, and Kerala. Online consultations worldwide.',
+    images: [socialPreview.url],
   },
   formatDetection: { telephone: true },
 };

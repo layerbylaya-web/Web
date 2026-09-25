@@ -6,6 +6,12 @@ export type { SiteImageSlot, SiteImageType } from '@/data/siteImages';
 
 // The public canonical origin must remain stable on preview deployments.
 export const siteUrl = 'https://layerbylaya.com';
+export const socialPreview = {
+  url: '/social/layerbylaya-social-preview-v1.jpg',
+  width: 1200,
+  height: 630,
+  alt: 'LayeR by Laya premium makeup and hair styling',
+};
 
 export const brand = {
   name: 'LayeR by Laya',
@@ -50,13 +56,14 @@ export function pageMetadata({
   title,
   description,
   path,
-  image = generatedImages.homeHero,
 }: {
   title: string;
   description: string;
   path: string;
+  // Kept for existing callers; the branded social card is shared across pages.
   image?: string;
 }): Metadata {
+  const shareTitle = path === '/' ? 'LayeR by Laya | Premium Makeup & Hair Styling' : `${title} | LayeR by Laya`;
   return {
     title,
     description,
@@ -64,16 +71,18 @@ export function pageMetadata({
       canonical: `${siteUrl}${path}`,
     },
     openGraph: {
-      title,
+      title: shareTitle,
       description,
       url: `${siteUrl}${path}`,
-      images: [{ url: image }],
+      siteName: brand.name,
+      type: 'website',
+      images: [socialPreview],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: shareTitle,
       description,
-      images: [image],
+      images: [socialPreview.url],
     },
   };
 }

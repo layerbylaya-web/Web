@@ -8,7 +8,7 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
       "name": "LayeR by Laya",
       "alternateName": "LayeR",
       "url": siteUrl,
-      "logo": `${siteUrl}/assets/brand/layer-logo.png`,
+      "logo": `${siteUrl}/brand/layerbylaya-logo-google.png`,
       "image": `${siteUrl}/assets/images/generated/home/home-hero-luxury-01.webp`,
       "description": "Premium makeup artist and hair stylist serving Dubai, the UAE, and Kerala, India. Luxury bridal makeup, party glam, fashion and editorial styling, commercial productions, and one-to-one online makeup consultations worldwide.",
       "telephone": brand.phone,
@@ -49,6 +49,7 @@ export default function JsonLd({ pageSchema }: { pageSchema?: object | object[] 
       "@id": `${siteUrl}/#website`,
       "url": siteUrl,
       "name": "LayeR by Laya",
+      "alternateName": "LayeR",
       "publisher": { "@id": `${siteUrl}/#organization` }
     }
   ];

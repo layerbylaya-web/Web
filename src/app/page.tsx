@@ -10,12 +10,15 @@ import { brand, commonFaqs, faqSchema, generatedImages, pageMetadata, serviceSch
 import { siteContent } from '@/data/siteContent';
 import { portfolioImages } from '@/data/portfolio';
 
-export const metadata: Metadata = pageMetadata({
-  title: 'Premium Makeup & Hair Styling by Laya',
-  description: 'Premium makeup and hair styling by Laya for bridal, event, editorial, and camera-ready beauty across UAE, Kerala, and online clients worldwide.',
-  path: '/',
-  image: generatedImages.homeHero,
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: 'Premium Makeup & Hair Styling by Laya',
+    description: 'Premium makeup and hair styling by Laya for bridal, event, editorial, and camera-ready beauty across UAE, Kerala, and online clients worldwide.',
+    path: '/',
+    image: generatedImages.homeHero,
+  }),
+  title: { absolute: 'LayeR by Laya | Premium Makeup & Hair Styling' },
+};
 
 const homeFaqs = [
   {
