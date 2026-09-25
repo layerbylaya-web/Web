@@ -19,14 +19,14 @@
 | Booking | WhatsApp links are live. The validated Resend API route is present, but delivery credentials and an inbox test are absent. The existing FormSubmit fallback remains temporary and its delivery is unverified; the UI says so. |
 | Admin | Live `/admin` returns 404 with `noindex, nofollow`. The local image preview has no production publishing capability. |
 | Founder content | No unverified portrait, awards, training or client claims were added. |
-| Search Console | Domain ownership verified with the LayeR Google account. The submitted sitemap now shows Success and 17 discovered pages. Homepage and Dubai bridal indexing requests were accepted; Google has not indexed them yet. See `SEARCH-CONSOLE-LAUNCH.md`. |
+| Search Console | Domain ownership verified with the LayeR Google account. The submitted sitemap shows Success and 17 discovered pages. URL Inspection now reports the homepage indexed. About, portfolio, Dubai bridal and Kerala bridal indexing requests were accepted; their indexing remains pending. See `SEARCH-CONSOLE-LAUNCH.md`. |
 | Local SEO | Guidance prepared without inventing an address, reviews or profile details. |
 
 ## Remaining owner and account tasks
 
 1. Confirm that the 12 existing portfolio files and their category labels represent Laya's work and are cleared for public use.
 2. Configure a verified Resend sender and booking recipient if form email is required, then submit a consented enquiry and confirm inbox receipt. WhatsApp is the reliable contact path until then.
-3. Review Search Console as Google processes the new property, inspect the remaining core URLs after brand assets deploy, and confirm the Google Business Profile details. Neither indexing nor rankings are guaranteed.
+3. Review Search Console as Google processes the remaining pages, and confirm the Google Business Profile details. Indexing requests do not guarantee inclusion or rankings.
 4. Supply an approved founder portrait and verified biography details before those are published.
 
 ## Deferred polish

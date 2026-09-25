@@ -13,4 +13,10 @@ The social card was inspected at 1200 × 630, 600 × 315 and 300 × 157. The ful
 
 ## Local technical checks
 
-The local production server returned 200 for the social card, Organization logo, favicon, icon and Apple icon. The rendered homepage, About and portfolio HTML reference the 1200 × 630 social card with Open Graph width, height and alt text; Twitter metadata references the same image. Organization JSON-LD uses the stable square logo URL. Production-domain access and platform cache refresh remain to be checked after deployment.
+The local production server returned 200 for the social card, Organization logo, favicon, icon and Apple icon. The rendered homepage, About and portfolio HTML reference the 1200 × 630 social card with Open Graph width, height and alt text; Twitter metadata references the same image. Organization JSON-LD uses the stable square logo URL.
+
+## Preview and production checks
+
+The Vercel preview for commit `4b5d365` was Ready in `layer-web / layer-by-laya-web`. Its homepage exposed the expected Open Graph and Twitter tags, and the social image was opened and visually checked there. The About, portfolio, Dubai bridal, Kerala bridal and contact pages loaded with their apex canonical URLs.
+
+Production deployment `7tZ9VJnY43kdyveCWwg8hFCuQk71` for the same commit is Ready. On `https://layerbylaya.com`, the favicon, 512 px icon, Apple icon, social card and Organization logo each return HTTP 200 with the expected image type. The live homepage HTML exposes the expected 1200 × 630 Open Graph image, title, description, alt text, Twitter large-image card and canonical apex URL. Social platform cache refresh and Google's search-result favicon change are asynchronous and cannot be claimed yet.
