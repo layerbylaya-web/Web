@@ -88,6 +88,9 @@ export default function Header() {
             className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-9 lg:h-11' : 'h-10 lg:h-12'}`}
             priority
           />
+          <span className="ml-1 text-[9px] font-medium uppercase tracking-[0.16em] text-deep-espresso/70">
+            by Laya
+          </span>
         </Link>
 
         {/* Desktop Nav */}

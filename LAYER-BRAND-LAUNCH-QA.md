@@ -24,4 +24,6 @@
 
 `npm run lint`, `npx tsc --noEmit`, and `npm run build` passed. The local production HTML and the Vercel preview exposed the expected metadata. The preview image was opened visually. Production returned 200 for the favicon, icon, Apple icon, social card, logo, robots and sitemap. Preview About, portfolio, Dubai bridal, Kerala bridal and contact pages loaded with apex canonical URLs. The production homepage HTML contained the expected Open Graph, Twitter, canonical and Organization logo values.
 
+The header combines the official LayeR wordmark with a visible “by Laya” label. Its layout was checked locally at desktop width and at 390 × 844 mobile width, with the menu still accessible.
+
 Search Console reports the homepage indexed. About, portfolio, Dubai bridal and Kerala bridal URL indexing requests were accepted. A homepage recrawl request was accepted after the brand deployment. See `SEARCH-CONSOLE-LAUNCH.md` for URL inspection details. Rich result display, social crawler caches and final search-result favicon display remain pending.
